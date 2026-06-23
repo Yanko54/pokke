@@ -1,7 +1,6 @@
 import type { FooterTab } from '../../types/footerTab';
 import styles from './FooterNav.module.css';
 
-// FooterNavが受け取るpropsの型
 type FooterNavProps = {
   activeTab: FooterTab;
   setActiveTab: (tab: FooterTab) => void;

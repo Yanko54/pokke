@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
 import type { Template } from '../types/template';
+import { BottomSheet } from '../components/BottomSheet/BottomSheet';
 
 const incomeTemplates: Template[] = [
   {
@@ -21,11 +23,14 @@ const incomeTemplates: Template[] = [
 ];
 
 export const IncomePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <main>
+    <>
       {incomeTemplates.map((template) => (
-        <TemplateCard key={template.id} template={template} />
+        <TemplateCard key={template.id} template={template} onClick={() => setIsOpen(true)} />
       ))}
-    </main>
+      <BottomSheet isOpen={isOpen} />
+    </>
   );
 };
