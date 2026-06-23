@@ -1,5 +1,9 @@
 import styles from "./Balance.module.css";
 
-export const Balance = () => {
-  return <div className={styles.header}>Balance</div>;
+type BalanceProps = {
+  amount: number;
+};
+
+export const Balance = ({ amount }:BalanceProps) => {
+  return <div className={styles.balance}>{amount}円</div>;
 };

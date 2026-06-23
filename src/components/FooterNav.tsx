@@ -1,5 +1,19 @@
-import styles from "./FooterNav.module.css";
+import type { FooterTab } from '../types/footerTab';
+import styles from './FooterNav.module.css';
 
-export const FooterNav = () => {
-  return <footer className={styles.fotternav}>FooterNav</footer>;
+// FooterNavが受け取るpropsの型
+type FooterNavProps = {
+  activeTab: FooterTab;
+  setActiveTab: (tab: FooterTab) => void;
+};
+
+export const FooterNav = ({ activeTab, setActiveTab }: FooterNavProps) => {
+  return (
+    <footer className={styles.footernav}>
+      <button onClick={() => setActiveTab('income')}>もらう</button>
+      <button onClick={() => setActiveTab('expense')}>つかう</button>
+      <button onClick={() => setActiveTab('history')}>りれき</button>
+      <p>{activeTab}</p>
+    </footer>
+  );
 };
