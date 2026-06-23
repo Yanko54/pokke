@@ -1,3 +1,31 @@
+import { TemplateCard } from '../components/TemplateCard/TemplateCard';
+import type { Template } from '../types/template';
+
+const expenseTemplates: Template[] = [
+  {
+    id: '1',
+    type: 'expense',
+    icon: '🍪',
+    memo: 'おかし',
+    amount: 100,
+    order: 1,
+  },
+  {
+    id: '2',
+    type: 'expense',
+    icon: '🧸',
+    memo: 'ガチャガチャ',
+    amount: 300,
+    order: 2,
+  },
+];
+
 export const ExpensePage = () => {
-  return <main>つかう</main>;
+  return (
+    <main>
+      {expenseTemplates.map((template) => (
+        <TemplateCard key={template.id} template={template} />
+      ))}
+    </main>
+  );
 };
