@@ -1,6 +1,6 @@
-import { Header } from './components/Header';
-import { Balance } from './components/Balance';
-import { FooterNav } from './components/FooterNav';
+import { Header } from './components/Header/Header';
+import { Balance } from './components/Balance/Balance';
+import { FooterNav } from './components/FooterNav/FooterNav';
 import { useState } from 'react';
 import type { FooterTab } from './types/footerTab';
 import { IncomePage } from './pages/IncomePage';
