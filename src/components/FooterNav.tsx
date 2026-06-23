@@ -13,7 +13,6 @@ export const FooterNav = ({ activeTab, setActiveTab }: FooterNavProps) => {
       <button onClick={() => setActiveTab('income')}>もらう</button>
       <button onClick={() => setActiveTab('expense')}>つかう</button>
       <button onClick={() => setActiveTab('history')}>りれき</button>
-      <p>{activeTab}</p>
     </footer>
   );
 };
