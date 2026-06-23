@@ -24,13 +24,21 @@ const incomeTemplates: Template[] = [
 
 export const IncomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
   return (
     <>
       {incomeTemplates.map((template) => (
-        <TemplateCard key={template.id} template={template} onClick={() => setIsOpen(true)} />
+        <TemplateCard
+          key={template.id}
+          template={template}
+          onClick={() => {
+            setIsOpen(true);
+            setSelectedTemplate(template);
+          }}
+        />
       ))}
-      <BottomSheet isOpen={isOpen} />
+      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)} template={selectedTemplate} />
     </>
   );
 };
