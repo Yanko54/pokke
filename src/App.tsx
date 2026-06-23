@@ -1,5 +1,15 @@
+import { Header } from "./components/Header";
+import { Balance } from "./components/Balance";
+import { FooterNav } from "./components/FooterNav";
+
 function App() {
-  return <h1>Pokke</h1>;
+  return (
+    <>
+      <Header />
+      <Balance />
+      <FooterNav />
+    </>
+  );
 }
 
 export default App;
