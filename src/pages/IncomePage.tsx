@@ -38,7 +38,12 @@ export const IncomePage = () => {
           }}
         />
       ))}
-      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)} template={selectedTemplate} />
+      <BottomSheet
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        template={selectedTemplate}
+        type={'income'}
+      />
     </>
   );
 };

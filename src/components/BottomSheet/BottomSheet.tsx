@@ -1,51 +1,86 @@
 import { useEffect, useState } from 'react';
-import type { Template } from '../../types/template';
+import type { Template, TransactionType } from '../../types/template';
+
+type FormState = {
+  type: TransactionType;
+  icon: string;
+  amount: string;
+  memo: string;
+};
 
 type BottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
   template: Template | null;
+  type: TransactionType;
 };
 
-export const BottomSheet = ({ isOpen, onClose, template }: BottomSheetProps) => {
-  const [amount, setAmount] = useState('');
-  const [memo, setMemo] = useState('');
+export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProps) => {
+  const [form, setForm] = useState<FormState>({
+    type,
+    icon: '',
+    amount: '',
+    memo: '',
+  });
 
-  // template変更時にstate更新
   useEffect(() => {
-    if (!template) return;
+    // template変更時にフォームの初期値を更新
+    if (template) {
+      setForm({
+        type: template.type,
+        icon: template.icon,
+        amount: String(template.amount), // inputは文字列で扱うためnumber → stringへ変換
+        memo: template.memo ?? '', // nullなら空文字を設定
+      });
+    } else {
+      // 新規登録時は空フォームを設定
+      setForm({
+        type,
+        icon: '',
+        amount: '',
+        memo: '',
+      });
+    }
+  }, [template, type]);
 
-    setAmount(String(template.amount));
-    setMemo(template.memo ?? '');
-  }, [template]);
-
-  // ボタン押下時
   const handleSubmit = () => {
     console.log({
-      type: template.type,
-      amount: Number(amount),
-      memo,
-      icon: template.icon,
+      type: form.type,
+      amount: Number(form.amount), // 保存用にstring → numberへ変換
+      memo: form.memo || null, // 未入力ならnull
+      icon: form.icon,
     });
   };
 
-  if (!isOpen || !template) return null;
+  if (!isOpen) return null;
 
   return (
     <div onClick={onClose}>
       <div onClick={(e) => e.stopPropagation()}>
-        <p>{template.icon}</p>
+        <p>{form.icon}</p>
+
         <input
           type="text"
           inputMode="numeric"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          value={form.amount}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              amount: e.target.value,
+            })
+          }
           placeholder="いくら？"
         />
+
         <input
           type="text"
-          value={memo}
-          onChange={(e) => setMemo(e.target.value)}
+          value={form.memo}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              memo: e.target.value,
+            })
+          }
           placeholder="なにをした？"
         />
         <button onClick={handleSubmit}>きろくする</button>
