@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { Template, TransactionType } from '../../types/template';
+import type { Template } from '../../types/template';
+import type { Transaction, TransactionType } from '../../types/transaction';
 
 type FormState = {
   type: TransactionType;
@@ -44,12 +45,17 @@ export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProp
   }, [template, type]);
 
   const handleSubmit = () => {
-    console.log({
+    const transaction: Transaction = {
+      id: crypto.randomUUID(),
+      templateId: template ? template.id : null,
       type: form.type,
-      amount: Number(form.amount), // 保存用にstring → numberへ変換
-      memo: form.memo || null, // 未入力ならnull
       icon: form.icon,
-    });
+      amount: Number(form.amount),
+      memo: form.memo || null,
+      createdAt: new Date().toISOString(),
+    };
+
+    console.log(transaction);
   };
 
   if (!isOpen) return null;

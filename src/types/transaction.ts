@@ -1,12 +1,13 @@
-import type { TransactionType } from "./transaction";
-
-export type Template = {
+ export type TransactionType =
+  | 'income'
+  | 'expense';
+ 
+ export type Transaction = {
     id: string;
+    templateId: string | null
     type: TransactionType;
     icon: string;
     amount: number;
     memo: string | null;
-    order: number;
     createdAt: string;
   };
-

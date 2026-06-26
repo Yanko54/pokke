@@ -11,6 +11,7 @@ const incomeTemplates: Template[] = [
     memo: 'せんたくをたたむ',
     amount: 20,
     order: 1,
+    createdAt: '2026/6/22',
   },
   {
     id: '2',
@@ -19,6 +20,7 @@ const incomeTemplates: Template[] = [
     memo: 'みずやり',
     amount: 10,
     order: 2,
+    createdAt: '2026/6/22',
   },
 ];
 
