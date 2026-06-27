@@ -3,7 +3,7 @@ import type { Template } from '../../types/template';
 import type { Transaction, TransactionType } from '../../types/transaction';
 
 type FormState = {
-  type: TransactionType;
+  transactionType: TransactionType;
   icon: string;
   amount: string;
   memo: string;
@@ -13,7 +13,7 @@ type BottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
   template: Template | null;
-  type: TransactionType;
+  transactionType: TransactionType;
   onAddTransaction: (transaction: Transaction) => void;
 };
 
@@ -21,11 +21,11 @@ export const BottomSheet = ({
   isOpen,
   onClose,
   template,
-  type,
+  transactionType,
   onAddTransaction,
 }: BottomSheetProps) => {
   const [form, setForm] = useState<FormState>({
-    type,
+    transactionType,
     icon: '',
     amount: '',
     memo: '',
@@ -36,7 +36,7 @@ export const BottomSheet = ({
     // template変更時にフォームの初期値を更新
     if (template) {
       setForm({
-        type: template.type,
+        transactionType: template.transactionType,
         icon: template.icon,
         amount: String(template.amount), // inputは文字列で扱うためnumber → stringへ変換
         memo: template.memo ?? '', // nullなら空文字を設定
@@ -44,19 +44,19 @@ export const BottomSheet = ({
     } else {
       // 新規登録時は空フォームを設定
       setForm({
-        type,
+        transactionType,
         icon: '',
         amount: '',
         memo: '',
       });
     }
-  }, [isOpen, template, type]);
+  }, [isOpen, template, transactionType]);
 
   const handleSubmit = () => {
     const transaction: Transaction = {
       id: crypto.randomUUID(),
       templateId: template ? template.id : null,
-      type: form.type,
+      transactionType: form.transactionType,
       icon: form.icon,
       amount: Number(form.amount),
       memo: form.memo || null,

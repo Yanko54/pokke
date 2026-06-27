@@ -11,7 +11,7 @@ type IncomePageProps = {
 const incomeTemplates: Template[] = [
   {
     id: '1',
-    type: 'income',
+    transactionType: 'income',
     icon: '👕',
     memo: 'せんたくをたたむ',
     amount: 20,
@@ -20,7 +20,7 @@ const incomeTemplates: Template[] = [
   },
   {
     id: '2',
-    type: 'income',
+    transactionType: 'income',
     icon: '🌱',
     memo: 'みずやり',
     amount: 10,
@@ -49,7 +49,7 @@ export const IncomePage = ({ onAddTransaction }: IncomePageProps) => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         template={selectedTemplate}
-        type={'income'}
+        transactionType={'income'}
         onAddTransaction={onAddTransaction}
       />
     </>

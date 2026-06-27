@@ -4,7 +4,7 @@ import type { Template } from '../types/template';
 const expenseTemplates: Template[] = [
   {
     id: '1',
-    type: 'expense',
+    transactionType: 'expense',
     icon: '🍪',
     memo: 'おかし',
     amount: 100,
@@ -13,7 +13,7 @@ const expenseTemplates: Template[] = [
   },
   {
     id: '2',
-    type: 'expense',
+    transactionType: 'expense',
     icon: '🧸',
     memo: 'ガチャガチャ',
     amount: 300,

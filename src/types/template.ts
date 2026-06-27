@@ -2,7 +2,7 @@ import type { TransactionType } from "./transaction";
 
 export type Template = {
     id: string;
-    type: TransactionType;
+    transactionType: TransactionType;
     icon: string;
     amount: number;
     memo: string | null;

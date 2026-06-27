@@ -5,7 +5,7 @@
  export type Transaction = {
     id: string;
     templateId: string | null
-    type: TransactionType;
+    transactionType: TransactionType;
     icon: string;
     amount: number;
     memo: string | null;
