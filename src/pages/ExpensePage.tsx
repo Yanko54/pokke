@@ -1,5 +1,12 @@
+import { useState } from 'react';
+import { BottomSheet } from '../components/BottomSheet/BottomSheet';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
 import type { Template } from '../types/template';
+import type { Transaction } from '../types/transaction';
+
+type ExpensePageProps = {
+  onAddTransaction: (transaction: Transaction) => void;
+};
 
 const expenseTemplates: Template[] = [
   {
@@ -22,12 +29,29 @@ const expenseTemplates: Template[] = [
   },
 ];
 
-export const ExpensePage = () => {
+export const ExpensePage = ({ onAddTransaction }: ExpensePageProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+
   return (
-    <main>
+    <>
       {expenseTemplates.map((template) => (
-        <TemplateCard key={template.id} template={template} />
+        <TemplateCard
+          key={template.id}
+          template={template}
+          onClick={() => {
+            setSelectedTemplate(template);
+            setIsOpen(true);
+          }}
+        />
       ))}
-    </main>
+      <BottomSheet
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        template={selectedTemplate}
+        transactionType={'expense'}
+        onAddTransaction={onAddTransaction}
+      />
+    </>
   );
 };

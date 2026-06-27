@@ -40,8 +40,8 @@ export const IncomePage = ({ onAddTransaction }: IncomePageProps) => {
           key={template.id}
           template={template}
           onClick={() => {
-            setIsOpen(true);
             setSelectedTemplate(template);
+            setIsOpen(true);
           }}
         />
       ))}

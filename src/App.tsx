@@ -11,6 +11,11 @@ import type { Transaction } from './types/transaction';
 function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const balance = transactions.reduce((acc, transaction) => {
+    return transaction.transactionType === 'income'
+      ? acc + transaction.amount
+      : acc - transaction.amount;
+  }, 0);
   const handleAddTransaction = (transaction: Transaction) => {
     setTransactions((prev) => {
       const nextTransactions = [...prev, transaction];
@@ -22,9 +27,9 @@ function App() {
   return (
     <>
       <Header childName="ひまり" />
-      <Balance amount={1250} />
+      <Balance amount={balance} />
       {activeTab === 'income' && <IncomePage onAddTransaction={handleAddTransaction} />}
-      {activeTab === 'expense' && <ExpensePage />}
+      {activeTab === 'expense' && <ExpensePage onAddTransaction={handleAddTransaction} />}
       {activeTab === 'history' && <HistoryPage />}
       <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
