@@ -9,6 +9,7 @@ const expenseTemplates: Template[] = [
     memo: 'おかし',
     amount: 100,
     order: 1,
+    createdAt: '2026/6/22',
   },
   {
     id: '2',
@@ -17,6 +18,7 @@ const expenseTemplates: Template[] = [
     memo: 'ガチャガチャ',
     amount: 300,
     order: 2,
+    createdAt: '2026/6/22',
   },
 ];
 

@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
 import type { Template } from '../types/template';
 import { BottomSheet } from '../components/BottomSheet/BottomSheet';
+import type { Transaction } from '../types/transaction';
+
+type IncomePageProps = {
+  onAddTransaction: (transaction: Transaction) => void;
+};
 
 const incomeTemplates: Template[] = [
   {
@@ -24,7 +29,7 @@ const incomeTemplates: Template[] = [
   },
 ];
 
-export const IncomePage = () => {
+export const IncomePage = ({ onAddTransaction }: IncomePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
@@ -45,6 +50,7 @@ export const IncomePage = () => {
         onClose={() => setIsOpen(false)}
         template={selectedTemplate}
         type={'income'}
+        onAddTransaction={onAddTransaction}
       />
     </>
   );

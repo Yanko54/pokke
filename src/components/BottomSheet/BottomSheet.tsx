@@ -14,9 +14,16 @@ type BottomSheetProps = {
   onClose: () => void;
   template: Template | null;
   type: TransactionType;
+  onAddTransaction: (transaction: Transaction) => void;
 };
 
-export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProps) => {
+export const BottomSheet = ({
+  isOpen,
+  onClose,
+  template,
+  type,
+  onAddTransaction,
+}: BottomSheetProps) => {
   const [form, setForm] = useState<FormState>({
     type,
     icon: '',
@@ -25,6 +32,7 @@ export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProp
   });
 
   useEffect(() => {
+    if (!isOpen) return;
     // template変更時にフォームの初期値を更新
     if (template) {
       setForm({
@@ -42,7 +50,7 @@ export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProp
         memo: '',
       });
     }
-  }, [template, type]);
+  }, [isOpen, template, type]);
 
   const handleSubmit = () => {
     const transaction: Transaction = {
@@ -55,7 +63,9 @@ export const BottomSheet = ({ isOpen, onClose, template, type }: BottomSheetProp
       createdAt: new Date().toISOString(),
     };
 
-    console.log(transaction);
+    onAddTransaction(transaction);
+    alert('きろくしました');
+    onClose();
   };
 
   if (!isOpen) return null;
