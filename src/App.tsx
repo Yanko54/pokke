@@ -11,11 +11,15 @@ import type { Transaction } from './types/transaction';
 function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  // 残高表示の計算処理
   const balance = transactions.reduce((acc, transaction) => {
     return transaction.transactionType === 'income'
       ? acc + transaction.amount
       : acc - transaction.amount;
   }, 0);
+
+  // 取引の登録処理
   const handleAddTransaction = (transaction: Transaction) => {
     setTransactions((prev) => {
       const nextTransactions = [...prev, transaction];
@@ -30,7 +34,7 @@ function App() {
       <Balance amount={balance} />
       {activeTab === 'income' && <IncomePage onAddTransaction={handleAddTransaction} />}
       {activeTab === 'expense' && <ExpensePage onAddTransaction={handleAddTransaction} />}
-      {activeTab === 'history' && <HistoryPage />}
+      {activeTab === 'history' && <HistoryPage transactions={transactions} />}
       <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
   );
