@@ -12,20 +12,16 @@ function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  // 残高表示の計算処理
+  // transactionsから現在の残高を計算
   const balance = transactions.reduce((acc, transaction) => {
     return transaction.transactionType === 'income'
       ? acc + transaction.amount
       : acc - transaction.amount;
   }, 0);
 
-  // 取引の登録処理
+  // transactionsに取引履歴を追加
   const handleAddTransaction = (transaction: Transaction) => {
-    setTransactions((prev) => {
-      const nextTransactions = [...prev, transaction];
-      console.log('更新後transactions', nextTransactions);
-      return nextTransactions;
-    });
+    setTransactions((prev) => [...prev, transaction]);
   };
 
   return (

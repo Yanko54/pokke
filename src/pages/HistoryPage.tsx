@@ -6,9 +6,13 @@ type HistoryPageProps = {
 };
 
 export const HistoryPage = ({ transactions }: HistoryPageProps) => {
+  // createdAtが新しい順に並び替え
+  const sortedTransactions = [...transactions].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
   return (
     <>
-      {transactions.map((transaction) => (
+      {sortedTransactions.map((transaction) => (
         <HistoryCard key={transaction.id} transaction={transaction} />
       ))}
     </>
