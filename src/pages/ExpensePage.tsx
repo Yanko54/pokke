@@ -6,6 +6,7 @@ import type { Transaction } from '../types/transaction';
 
 type ExpensePageProps = {
   onAddTransaction: (transaction: Transaction) => void;
+  balance: number;
 };
 
 const expenseTemplates: Template[] = [
@@ -29,7 +30,7 @@ const expenseTemplates: Template[] = [
   },
 ];
 
-export const ExpensePage = ({ onAddTransaction }: ExpensePageProps) => {
+export const ExpensePage = ({ onAddTransaction, balance }: ExpensePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
@@ -51,6 +52,7 @@ export const ExpensePage = ({ onAddTransaction }: ExpensePageProps) => {
         template={selectedTemplate}
         transactionType={'expense'}
         onAddTransaction={onAddTransaction}
+        balance={balance}
       />
     </>
   );

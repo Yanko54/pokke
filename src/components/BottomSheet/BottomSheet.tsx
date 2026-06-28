@@ -15,6 +15,7 @@ type BottomSheetProps = {
   template: Template | null;
   transactionType: TransactionType;
   onAddTransaction: (transaction: Transaction) => void;
+  balance: number;
 };
 
 export const BottomSheet = ({
@@ -23,6 +24,7 @@ export const BottomSheet = ({
   template,
   transactionType,
   onAddTransaction,
+  balance,
 }: BottomSheetProps) => {
   const [form, setForm] = useState<FormState>({
     transactionType,
@@ -53,12 +55,24 @@ export const BottomSheet = ({
   }, [isOpen, template, transactionType]);
 
   const handleSubmit = () => {
+    const amount = Number(form.amount);
+    // 金額未入力・0円・マイナス金額の登録は許可しない
+    if (isNaN(amount) || amount <= 0) {
+      alert('おかねをただしく入力してください');
+      return;
+    }
+    // 残高不足チェック
+    if (transactionType === 'expense' && amount > balance) {
+      alert('おかねがたりません');
+      return;
+    }
+
     const transaction: Transaction = {
       id: crypto.randomUUID(),
       templateId: template ? template.id : null,
       transactionType: form.transactionType,
       icon: form.icon,
-      amount: Number(form.amount),
+      amount: amount,
       memo: form.memo || null,
       createdAt: new Date().toISOString(),
     };

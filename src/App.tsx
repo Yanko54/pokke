@@ -29,7 +29,9 @@ function App() {
       <Header childName="ひまり" />
       <Balance amount={balance} />
       {activeTab === 'income' && <IncomePage onAddTransaction={handleAddTransaction} />}
-      {activeTab === 'expense' && <ExpensePage onAddTransaction={handleAddTransaction} />}
+      {activeTab === 'expense' && (
+        <ExpensePage onAddTransaction={handleAddTransaction} balance={balance} />
+      )}
       {activeTab === 'history' && <HistoryPage transactions={transactions} />}
       <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
