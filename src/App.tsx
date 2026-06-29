@@ -9,10 +9,58 @@ import { HistoryPage } from './pages/HistoryPage';
 import type { Transaction } from './types/transaction';
 import type { Template } from './types/template';
 
+const initialTemplates: Template[] = [
+  {
+    id: '1',
+    transactionType: 'income',
+    icon: '💰',
+    memo: 'おこづかい',
+    amount: 1000,
+    order: 1,
+    createdAt: '2026/6/22',
+  },
+  {
+    id: '2',
+    transactionType: 'income',
+    icon: '👕',
+    memo: 'せんたくをたたむ',
+    amount: 20,
+    order: 2,
+    createdAt: '2026/6/22',
+  },
+  {
+    id: '3',
+    transactionType: 'income',
+    icon: '🌱',
+    memo: 'みずやり',
+    amount: 10,
+    order: 3,
+    createdAt: '2026/6/22',
+  },
+  {
+    id: '4',
+    transactionType: 'expense',
+    icon: '🍪',
+    memo: 'おかし',
+    amount: 100,
+    order: 1,
+    createdAt: '2026/6/22',
+  },
+  {
+    id: '5',
+    transactionType: 'expense',
+    icon: '🧸',
+    memo: 'ガチャ',
+    amount: 300,
+    order: 2,
+    createdAt: '2026/6/22',
+  },
+];
+
 function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [templates, setTemplates] = useState<Template[]>([]);
+  const [templates, setTemplates] = useState<Template[]>(initialTemplates);
 
   // transactionsから現在の残高を計算
   const balance = transactions.reduce((acc, transaction) => {
@@ -40,6 +88,7 @@ function App() {
           onAddTransaction={handleAddTransaction}
           onAddTemplate={handleAddTemplate}
           balance={balance}
+          templates={templates}
         />
       )}
       {activeTab === 'expense' && (
@@ -47,6 +96,7 @@ function App() {
           onAddTransaction={handleAddTransaction}
           onAddTemplate={handleAddTemplate}
           balance={balance}
+          templates={templates}
         />
       )}
       {activeTab === 'history' && <HistoryPage transactions={transactions} />}

@@ -16,6 +16,7 @@ type FormBottomSheetProps = {
   template: Template | null;
   transactionType: TransactionType;
   onAddTransaction: (transaction: Transaction) => void;
+  onAddTemplate: (template: Template) => void;
   balance: number;
 };
 
@@ -25,6 +26,7 @@ export const FormBottomSheet = ({
   template,
   transactionType,
   onAddTransaction,
+  onAddTemplate,
   balance,
 }: FormBottomSheetProps) => {
   const [form, setForm] = useState<FormState>({
@@ -83,7 +85,32 @@ export const FormBottomSheet = ({
     onClose();
   };
 
-  if (!isOpen) return null;
+  const handleAddTemplate = () => {
+    const amount = Number(form.amount);
+
+    if (!form.icon) {
+      alert('アイコンがないよ');
+      return;
+    }
+    if (isNaN(amount) || amount <= 0) {
+      alert('いくらかおしえてね');
+      return;
+    }
+
+    const newTemplate: Template = {
+      id: crypto.randomUUID(),
+      transactionType: form.transactionType,
+      icon: form.icon,
+      amount: amount,
+      memo: form.memo || null,
+      order: 0,
+      createdAt: new Date().toISOString(),
+    };
+
+    onAddTemplate(newTemplate);
+    alert('テンプレートをつくりました');
+    onClose();
+  };
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
@@ -113,6 +140,7 @@ export const FormBottomSheet = ({
         placeholder="なにをした？"
       />
       <button onClick={handleSubmit}>きろくする</button>
+      <button onClick={handleAddTemplate}>テンプレートとして保存</button>
     </BottomSheet>
   );
 };
