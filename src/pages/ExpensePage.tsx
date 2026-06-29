@@ -1,38 +1,32 @@
 import { useState } from 'react';
-import { BottomSheet } from '../components/BottomSheet/BottomSheet';
+import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
 import type { Template } from '../types/template';
 import type { Transaction } from '../types/transaction';
 
 type ExpensePageProps = {
   onAddTransaction: (transaction: Transaction) => void;
+  onAddTemplate: (template: Template) => void;
   balance: number;
+  templates: Template[];
 };
 
-const expenseTemplates: Template[] = [
-  {
-    id: '1',
-    transactionType: 'expense',
-    icon: '🍪',
-    memo: 'おかし',
-    amount: 100,
-    order: 1,
-    createdAt: '2026/6/22',
-  },
-  {
-    id: '2',
-    transactionType: 'expense',
-    icon: '🧸',
-    memo: 'ガチャガチャ',
-    amount: 300,
-    order: 2,
-    createdAt: '2026/6/22',
-  },
-];
-
-export const ExpensePage = ({ onAddTransaction, balance }: ExpensePageProps) => {
+export const ExpensePage = ({
+  onAddTransaction,
+  onAddTemplate,
+  balance,
+  templates,
+}: ExpensePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+
+  //  フォームを閉じる処理
+  const handleClose = () => {
+    setIsOpen(false);
+    setSelectedTemplate(null);
+  };
+  // expenseに絞り込み
+  const expenseTemplates = templates.filter((template) => template.transactionType === 'expense');
 
   return (
     <>
@@ -46,12 +40,13 @@ export const ExpensePage = ({ onAddTransaction, balance }: ExpensePageProps) => 
           }}
         />
       ))}
-      <BottomSheet
+      <FormBottomSheet
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={handleClose}
         template={selectedTemplate}
         transactionType={'expense'}
         onAddTransaction={onAddTransaction}
+        onAddTemplate={onAddTemplate}
         balance={balance}
       />
     </>

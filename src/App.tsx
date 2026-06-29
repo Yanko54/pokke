@@ -7,10 +7,12 @@ import { IncomePage } from './pages/IncomePage';
 import { ExpensePage } from './pages/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage';
 import type { Transaction } from './types/transaction';
+import type { Template } from './types/template';
 
 function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [templates, setTemplates] = useState<Template[]>([]);
 
   // transactionsから現在の残高を計算
   const balance = transactions.reduce((acc, transaction) => {
@@ -24,13 +26,28 @@ function App() {
     setTransactions((prev) => [...prev, transaction]);
   };
 
+  // templateに新しいテンプレートを追加
+  const handleAddTemplate = (template: Template) => {
+    setTemplates((prev) => [...prev, template]);
+  };
+
   return (
     <>
       <Header childName="ひまり" />
       <Balance amount={balance} />
-      {activeTab === 'income' && <IncomePage onAddTransaction={handleAddTransaction} />}
+      {activeTab === 'income' && (
+        <IncomePage
+          onAddTransaction={handleAddTransaction}
+          onAddTemplate={handleAddTemplate}
+          balance={balance}
+        />
+      )}
       {activeTab === 'expense' && (
-        <ExpensePage onAddTransaction={handleAddTransaction} balance={balance} />
+        <ExpensePage
+          onAddTransaction={handleAddTransaction}
+          onAddTemplate={handleAddTemplate}
+          balance={balance}
+        />
       )}
       {activeTab === 'history' && <HistoryPage transactions={transactions} />}
       <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
