@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
-import type { Template } from '../types/template';
-import type { Transaction } from '../types/transaction';
+import type { Template, CreateTemplate } from '../types/template';
+import type { CreateTransaction } from '../types/transaction';
 
+// ======= Props =======
 type ExpensePageProps = {
-  onAddTransaction: (transaction: Transaction) => void;
-  onAddTemplate: (template: Template) => void;
+  onAddTransaction: (transaction: CreateTransaction) => void;
+  onAddTemplate: (template: CreateTemplate) => void;
   balance: number;
   templates: Template[];
 };
@@ -17,17 +18,20 @@ export const ExpensePage = ({
   balance,
   templates,
 }: ExpensePageProps) => {
+  // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
-  //  フォームを閉じる処理
+  // ======= 表示用expenseテンプレート =======
+  const expenseTemplates = templates.filter((template) => template.transactionType === 'expense');
+
+  // ======= フォーム制御 =======
   const handleClose = () => {
     setIsOpen(false);
     setSelectedTemplate(null);
   };
-  // expenseに絞り込み
-  const expenseTemplates = templates.filter((template) => template.transactionType === 'expense');
 
+  // ======= UI =======
   return (
     <>
       {expenseTemplates.map((template) => (

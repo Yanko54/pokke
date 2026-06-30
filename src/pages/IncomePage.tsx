@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
-import type { Template } from '../types/template';
+import type { Template, CreateTemplate } from '../types/template';
 import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
-import type { Transaction } from '../types/transaction';
+import type { CreateTransaction } from '../types/transaction';
 
+// ======= Props =======
 type IncomePageProps = {
-  onAddTransaction: (transaction: Transaction) => void;
-  onAddTemplate: (template: Template) => void;
+  onAddTransaction: (transaction: CreateTransaction) => void;
+  onAddTemplate: (template: CreateTemplate) => void;
   balance: number;
   templates: Template[];
 };
@@ -17,17 +18,20 @@ export const IncomePage = ({
   balance,
   templates,
 }: IncomePageProps) => {
+  // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
-  //  フォームを閉じる処理
+  // ======= 表示用incomeテンプレート =======
+  const incomeTemplates = templates.filter((template) => template.transactionType === 'income');
+
+  // ======= フォーム制御 =======
   const handleClose = () => {
     setIsOpen(false);
     setSelectedTemplate(null);
   };
-  // incomeに絞り込み
-  const incomeTemplates = templates.filter((template) => template.transactionType === 'income');
 
+  // ======= UI =======
   return (
     <>
       {incomeTemplates.map((template) => (

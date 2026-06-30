@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { Template } from '../../types/template';
-import type { Transaction, TransactionType } from '../../types/transaction';
+import type { Template, CreateTemplate } from '../../types/template';
+import type { TransactionType, CreateTransaction } from '../../types/transaction';
 import { BottomSheet } from './BottomSheet';
 
 type FormState = {
@@ -10,13 +10,14 @@ type FormState = {
   memo: string;
 };
 
+// ======= Props =======
 type FormBottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
   template: Template | null;
   transactionType: TransactionType;
-  onAddTransaction: (transaction: Transaction) => void;
-  onAddTemplate: (template: Template) => void;
+  onAddTransaction: (transaction: CreateTransaction) => void;
+  onAddTemplate: (template: CreateTemplate) => void;
   balance: number;
 };
 
@@ -29,6 +30,7 @@ export const FormBottomSheet = ({
   onAddTemplate,
   balance,
 }: FormBottomSheetProps) => {
+  // ======= State =======
   const [form, setForm] = useState<FormState>({
     transactionType,
     icon: '',
@@ -36,6 +38,7 @@ export const FormBottomSheet = ({
     memo: '',
   });
 
+  // ======= 初期値設定 =======
   useEffect(() => {
     if (!isOpen) return;
     // template変更時にフォームの初期値を更新
@@ -57,6 +60,7 @@ export const FormBottomSheet = ({
     }
   }, [isOpen, template, transactionType]);
 
+  // ======= 取引登録 =======
   const handleSubmit = () => {
     const amount = Number(form.amount);
     // 金額未入力・0円・マイナス金額の登録は許可しない
@@ -70,14 +74,12 @@ export const FormBottomSheet = ({
       return;
     }
 
-    const transaction: Transaction = {
-      id: crypto.randomUUID(),
+    const transaction: CreateTransaction = {
       templateId: template ? template.id : null,
       transactionType: form.transactionType,
       icon: form.icon,
       amount: amount,
       memo: form.memo || null,
-      createdAt: new Date().toISOString(),
     };
 
     onAddTransaction(transaction);
@@ -85,6 +87,7 @@ export const FormBottomSheet = ({
     onClose();
   };
 
+  // ======= テンプレート保存 =======
   const handleAddTemplate = () => {
     const amount = Number(form.amount);
 
@@ -97,14 +100,11 @@ export const FormBottomSheet = ({
       return;
     }
 
-    const newTemplate: Template = {
-      id: crypto.randomUUID(),
+    const newTemplate: CreateTemplate = {
       transactionType: form.transactionType,
       icon: form.icon,
       amount: amount,
       memo: form.memo || null,
-      order: 0,
-      createdAt: new Date().toISOString(),
     };
 
     onAddTemplate(newTemplate);
@@ -112,6 +112,7 @@ export const FormBottomSheet = ({
     onClose();
   };
 
+  // ======= UI =======
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <p>{form.icon}</p>

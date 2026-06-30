@@ -11,3 +11,5 @@
     memo: string | null;
     createdAt: string;
   };
+
+  export type CreateTransaction = Omit<Transaction, "id" | "createdAt">;

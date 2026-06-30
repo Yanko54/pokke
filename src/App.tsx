@@ -6,9 +6,10 @@ import type { FooterTab } from './types/footerTab';
 import { IncomePage } from './pages/IncomePage';
 import { ExpensePage } from './pages/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage';
-import type { Transaction } from './types/transaction';
+import type { Transaction, CreateTransaction } from './types/transaction';
 import type { Template, CreateTemplate } from './types/template';
 
+// ======= 初期テンプレート =======
 const initialTemplates: Template[] = [
   {
     id: '1',
@@ -58,23 +59,27 @@ const initialTemplates: Template[] = [
 ];
 
 function App() {
+  // ======= State =======
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [templates, setTemplates] = useState<Template[]>(initialTemplates);
 
-  // transactionsから現在の残高を計算
+  // ======= 残高計算 =======
   const balance = transactions.reduce((acc, transaction) => {
     return transaction.transactionType === 'income'
       ? acc + transaction.amount
       : acc - transaction.amount;
   }, 0);
 
-  // transactionsに取引履歴を追加
-  const handleAddTransaction = (transaction: Transaction) => {
-    setTransactions((prev) => [...prev, transaction]);
+  // ======= 取引追加 =======
+  const handleAddTransaction = (transaction: CreateTransaction) => {
+    setTransactions((prev) => [
+      ...prev,
+      { ...transaction, id: crypto.randomUUID(), createdAt: new Date().toISOString() },
+    ]);
   };
 
-  // templateに新しいテンプレートを追加
+  // ======= テンプレート追加 =======
   const handleAddTemplate = (template: CreateTemplate) => {
     setTemplates((prev) => [
       ...prev,
@@ -87,6 +92,7 @@ function App() {
     ]);
   };
 
+  // ======= UI =======
   return (
     <>
       <Header childName="ひまり" />
