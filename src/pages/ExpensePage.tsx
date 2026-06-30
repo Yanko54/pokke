@@ -3,6 +3,7 @@ import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
 import type { Template, CreateTemplate } from '../types/template';
 import type { CreateTransaction } from '../types/transaction';
+import { FloatingActionButton } from '../components/FloatingActionButton/FloatingActionButton';
 
 // ======= Props =======
 type ExpensePageProps = {
@@ -44,6 +45,12 @@ export const ExpensePage = ({
           }}
         />
       ))}
+      <FloatingActionButton
+        onClick={() => {
+          setSelectedTemplate(null);
+          setIsOpen(true);
+        }}
+      />
       <FormBottomSheet
         isOpen={isOpen}
         onClose={handleClose}
