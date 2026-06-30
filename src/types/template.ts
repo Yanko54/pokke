@@ -10,3 +10,4 @@ export type Template = {
     createdAt: string;
   };
 
+  export type CreateTemplate = Omit<Template, "id" | "order" | "createdAt">;

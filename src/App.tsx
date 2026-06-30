@@ -7,7 +7,7 @@ import { IncomePage } from './pages/IncomePage';
 import { ExpensePage } from './pages/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage';
 import type { Transaction } from './types/transaction';
-import type { Template } from './types/template';
+import type { Template, CreateTemplate } from './types/template';
 
 const initialTemplates: Template[] = [
   {
@@ -75,8 +75,16 @@ function App() {
   };
 
   // templateに新しいテンプレートを追加
-  const handleAddTemplate = (template: Template) => {
-    setTemplates((prev) => [...prev, template]);
+  const handleAddTemplate = (template: CreateTemplate) => {
+    setTemplates((prev) => [
+      ...prev,
+      {
+        ...template,
+        id: crypto.randomUUID(),
+        order: prev.length + 1,
+        createdAt: new Date().toISOString(),
+      },
+    ]);
   };
 
   return (
