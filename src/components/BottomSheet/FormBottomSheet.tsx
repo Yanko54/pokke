@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { TransactionType, CreateTransaction } from '../../types/transaction';
 import { BottomSheet } from './BottomSheet';
+import { IconPicker } from '../IconPicker/IconPicker';
 
 type FormState = {
   transactionType: TransactionType;
@@ -37,6 +38,7 @@ export const FormBottomSheet = ({
     amount: '',
     memo: '',
   });
+  const [mode, setMode] = useState<'form' | 'icon'>('form');
 
   // ======= 初期値設定 =======
   useEffect(() => {
@@ -53,7 +55,7 @@ export const FormBottomSheet = ({
       // 新規登録時は空フォームを設定
       setForm({
         transactionType,
-        icon: '',
+        icon: '⭐️', // デフォルトアイコンを設定
         amount: '',
         memo: '',
       });
@@ -115,33 +117,50 @@ export const FormBottomSheet = ({
   // ======= UI =======
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <p>{form.icon}</p>
-      <input
-        type="text"
-        inputMode="numeric"
-        value={form.amount}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            amount: e.target.value,
-          })
-        }
-        placeholder="いくら？"
-      />
+      {mode === 'form' ? (
+        // ======= フォーム画面 =======
+        <>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={form.amount}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                amount: e.target.value,
+              })
+            }
+            placeholder="いくら？"
+          />
 
-      <input
-        type="text"
-        value={form.memo}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            memo: e.target.value,
-          })
-        }
-        placeholder="なにをした？"
-      />
-      <button onClick={handleSubmit}>きろくする</button>
-      <button onClick={handleAddTemplate}>テンプレートとして保存</button>
+          <input
+            type="text"
+            value={form.memo}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                memo: e.target.value,
+              })
+            }
+            placeholder="なにをした？"
+          />
+          <button onClick={() => setMode('icon')}>{form.icon}アイコンをえらぶ</button>
+          <button onClick={handleSubmit}>きろくする</button>
+          <button onClick={handleAddTemplate}>テンプレートとして保存</button>
+        </>
+      ) : (
+        // ======= アイコン選択画面 =======
+        <>
+          <IconPicker
+            selectedIcon={form.icon}
+            onSelectIcon={(icon) => {
+              setForm({ ...form, icon });
+              setMode('form');
+            }}
+          />
+          <button onClick={() => setMode('form')}>もどる</button>
+        </>
+      )}
     </BottomSheet>
   );
 };
