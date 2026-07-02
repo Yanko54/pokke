@@ -118,7 +118,7 @@ export const FormBottomSheet = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       {mode === 'form' ? (
-        // ======= フォーム画面 =======
+        // ---- フォーム画面 ----
         <>
           <input
             type="text"
@@ -149,7 +149,7 @@ export const FormBottomSheet = ({
           <button onClick={handleAddTemplate}>テンプレートとして保存</button>
         </>
       ) : (
-        // ======= アイコン選択画面 =======
+        // ---- アイコン選択画面 ----
         <>
           <IconPicker
             selectedIcon={form.icon}

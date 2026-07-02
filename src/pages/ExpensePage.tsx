@@ -35,6 +35,11 @@ export const ExpensePage = ({
   // ======= UI =======
   return (
     <>
+      {expenseTemplates.length === 0 && (
+        <div>
+          <p>テンプレートをつくってね</p>
+        </div>
+      )}
       {expenseTemplates.map((template) => (
         <TemplateCard
           key={template.id}
