@@ -8,6 +8,8 @@ import { ExpensePage } from './pages/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage';
 import type { Transaction, CreateTransaction } from './types/transaction';
 import type { Template, CreateTemplate } from './types/template';
+import type { Child, CreateChild } from './types/child';
+import { WelcomePage } from './pages/WelcomePage';
 
 // ======= 初期テンプレート =======
 const initialTemplates: Template[] = [
@@ -63,6 +65,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [templates, setTemplates] = useState<Template[]>(initialTemplates);
+  const [child, setChild] = useState<Child | null>(null);
 
   // ======= 残高計算 =======
   const balance = transactions.reduce((acc, transaction) => {
@@ -92,29 +95,46 @@ function App() {
     ]);
   };
 
+  // ======= 子ども追加 =======
+  const handleAddChild = (child: CreateChild) => {
+    const now = new Date().toISOString();
+    setChild({
+      ...child,
+      id: crypto.randomUUID(),
+      createdAt: now,
+      updatedAt: now,
+    });
+  };
+
   // ======= UI =======
   return (
     <>
-      <Header childName="ひまり" />
-      <Balance amount={balance} />
-      {activeTab === 'income' && (
-        <IncomePage
-          onAddTransaction={handleAddTransaction}
-          onAddTemplate={handleAddTemplate}
-          balance={balance}
-          templates={templates}
-        />
+      {child === null ? (
+        <WelcomePage onAddChild={handleAddChild} />
+      ) : (
+        <>
+          <Header childName={child.name} />
+          <Balance amount={balance} />
+          {activeTab === 'income' && (
+            <IncomePage
+              onAddTransaction={handleAddTransaction}
+              onAddTemplate={handleAddTemplate}
+              balance={balance}
+              templates={templates}
+            />
+          )}
+          {activeTab === 'expense' && (
+            <ExpensePage
+              onAddTransaction={handleAddTransaction}
+              onAddTemplate={handleAddTemplate}
+              balance={balance}
+              templates={templates}
+            />
+          )}
+          {activeTab === 'history' && <HistoryPage transactions={transactions} />}
+          <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        </>
       )}
-      {activeTab === 'expense' && (
-        <ExpensePage
-          onAddTransaction={handleAddTransaction}
-          onAddTemplate={handleAddTemplate}
-          balance={balance}
-          templates={templates}
-        />
-      )}
-      {activeTab === 'history' && <HistoryPage transactions={transactions} />}
-      <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
   );
 }
