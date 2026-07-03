@@ -42,7 +42,7 @@ function App() {
     ]);
   };
 
-  // ======= テンプレート追加 =======
+  // ======= テンプレート追加・削除 =======
   const handleAddTemplate = (template: CreateTemplate) => {
     setTemplates((prev) => [
       ...prev,
@@ -53,6 +53,9 @@ function App() {
         createdAt: new Date().toISOString(),
       },
     ]);
+  };
+  const handleDeleteTemplate = (id: string) => {
+    setTemplates((prev) => prev.filter((template) => template.id !== id));
   };
 
   // ======= 子ども追加 =======
@@ -94,6 +97,7 @@ function App() {
             <IncomePage
               onAddTransaction={handleAddTransaction}
               onAddTemplate={handleAddTemplate}
+              onDeleteTemplate={handleDeleteTemplate}
               balance={balance}
               templates={templates}
             />
@@ -102,6 +106,7 @@ function App() {
             <ExpensePage
               onAddTransaction={handleAddTransaction}
               onAddTemplate={handleAddTemplate}
+              onDeleteTemplate={handleDeleteTemplate}
               balance={balance}
               templates={templates}
             />

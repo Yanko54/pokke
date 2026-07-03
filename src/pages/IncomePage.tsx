@@ -9,6 +9,7 @@ import { FloatingActionButton } from '../components/FloatingActionButton/Floatin
 type IncomePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
+  onDeleteTemplate: (id: string) => void;
   balance: number;
   templates: Template[];
 };
@@ -16,6 +17,7 @@ type IncomePageProps = {
 export const IncomePage = ({
   onAddTransaction,
   onAddTemplate,
+  onDeleteTemplate,
   balance,
   templates,
 }: IncomePageProps) => {
@@ -51,6 +53,7 @@ export const IncomePage = ({
             setSelectedTemplate(template);
             setIsOpen(true);
           }}
+          onDelete={onDeleteTemplate}
         />
       ))}
       <FloatingActionButton
