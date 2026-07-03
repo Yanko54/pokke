@@ -3,9 +3,10 @@ import { HistoryCard } from '../components/HistoryCard/HistoryCard';
 
 type HistoryPageProps = {
   transactions: Transaction[];
+  onDeleteTransaction: (id: string) => void;
 };
 
-export const HistoryPage = ({ transactions }: HistoryPageProps) => {
+export const HistoryPage = ({ transactions, onDeleteTransaction }: HistoryPageProps) => {
   // createdAtが新しい順に並び替え
   const sortedTransactions = [...transactions].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -16,7 +17,11 @@ export const HistoryPage = ({ transactions }: HistoryPageProps) => {
         <h2>りれき</h2>
       </div>
       {sortedTransactions.map((transaction) => (
-        <HistoryCard key={transaction.id} transaction={transaction} />
+        <HistoryCard
+          key={transaction.id}
+          transaction={transaction}
+          onDelete={onDeleteTransaction}
+        />
       ))}
     </>
   );

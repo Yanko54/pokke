@@ -34,12 +34,15 @@ function App() {
       : acc - transaction.amount;
   }, 0);
 
-  // ======= 取引追加 =======
+  // ======= 取引追加・削除 =======
   const handleAddTransaction = (transaction: CreateTransaction) => {
     setTransactions((prev) => [
       ...prev,
       { ...transaction, id: crypto.randomUUID(), createdAt: new Date().toISOString() },
     ]);
+  };
+  const handleDeleteTransaction = (id: string) => {
+    setTransactions((prev) => prev.filter((transaction) => transaction.id !== id));
   };
 
   // ======= テンプレート追加・削除 =======
@@ -70,7 +73,7 @@ function App() {
   };
 
   // ======= localStorage保存 =======
-  // TODO: MVP完成後、useLocalStorageカスタムフックへ切り出す
+  // TODO: MVP完成後、useLocalStorageカスタムフックへ切り出し検討
   useEffect(() => {
     if (child === null) return;
     localStorage.setItem('child', JSON.stringify(child));
@@ -111,7 +114,12 @@ function App() {
               templates={templates}
             />
           )}
-          {activeTab === 'history' && <HistoryPage transactions={transactions} />}
+          {activeTab === 'history' && (
+            <HistoryPage
+              transactions={transactions}
+              onDeleteTransaction={handleDeleteTransaction}
+            />
+          )}
           <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
         </>
       )}
