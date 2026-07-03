@@ -40,6 +40,9 @@ export const IncomePage = ({
           <p>テンプレートをつくってね</p>
         </div>
       )}
+      <div>
+        <h2>もらう</h2>
+      </div>
       {incomeTemplates.map((template) => (
         <TemplateCard
           key={template.id}

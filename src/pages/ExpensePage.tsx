@@ -40,6 +40,9 @@ export const ExpensePage = ({
           <p>テンプレートをつくってね</p>
         </div>
       )}
+      <div>
+        <h2>つかう</h2>
+      </div>
       {expenseTemplates.map((template) => (
         <TemplateCard
           key={template.id}

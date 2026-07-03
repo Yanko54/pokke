@@ -12,6 +12,9 @@ export const HistoryPage = ({ transactions }: HistoryPageProps) => {
   );
   return (
     <>
+      <div>
+        <h2>りれき</h2>
+      </div>
       {sortedTransactions.map((transaction) => (
         <HistoryCard key={transaction.id} transaction={transaction} />
       ))}

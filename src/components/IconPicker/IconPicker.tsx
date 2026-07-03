@@ -22,6 +22,7 @@ const icons = [
 export const IconPicker = ({ selectedIcon, onSelectIcon }: IconPickerProps) => {
   return (
     <div>
+      <h2>アイコンをえらぶ</h2>
       {icons.map((item) => (
         <button
           key={item.id}

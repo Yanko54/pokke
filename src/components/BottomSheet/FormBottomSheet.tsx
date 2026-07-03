@@ -117,6 +117,18 @@ export const FormBottomSheet = ({
   // ======= UI =======
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
+      <button
+        disabled={form.transactionType === 'income'}
+        onClick={() => setForm({ ...form, transactionType: 'income' })}
+      >
+        もらう
+      </button>
+      <button
+        disabled={form.transactionType === 'expense'}
+        onClick={() => setForm({ ...form, transactionType: 'expense' })}
+      >
+        つかう
+      </button>
       {mode === 'form' ? (
         // ---- フォーム画面 ----
         <>
