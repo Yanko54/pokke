@@ -11,6 +11,7 @@ import type { FooterTab } from './types/footerTab';
 import type { Transaction, CreateTransaction } from './types/transaction';
 import type { Template, CreateTemplate } from './types/template';
 import type { Child, CreateChild } from './types/child';
+import styles from './App.module.css';
 
 function App() {
   // ======= State =======
@@ -98,46 +99,42 @@ function App() {
   }, [templates]);
 
   // ======= UI =======
-  return (
-    <>
-      {child === null ? (
-        <WelcomePage onAddChild={handleAddChild} />
-      ) : (
-        <>
-          <Header childName={child.name} />
-          <Balance amount={balance} />
-          {activeTab === 'income' && (
-            <IncomePage
-              onAddTransaction={handleAddTransaction}
-              onAddTemplate={handleAddTemplate}
-              onDeleteTemplate={handleDeleteTemplate}
-              balance={balance}
-              templates={templates}
-              showToast={showToast}
-            />
-          )}
-          {activeTab === 'expense' && (
-            <ExpensePage
-              onAddTransaction={handleAddTransaction}
-              onAddTemplate={handleAddTemplate}
-              onDeleteTemplate={handleDeleteTemplate}
-              balance={balance}
-              templates={templates}
-              showToast={showToast}
-            />
-          )}
-          {activeTab === 'history' && (
-            <HistoryPage
-              transactions={transactions}
-              onDeleteTransaction={handleDeleteTransaction}
-              showToast={showToast}
-            />
-          )}
-          <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
-          {toastMessage && <Toast message={toastMessage} />}
-        </>
+  return child === null ? (
+    <WelcomePage onAddChild={handleAddChild} />
+  ) : (
+    <div className={styles.app}>
+      <Header childName={child.name} />
+      <Balance amount={balance} />
+      {activeTab === 'income' && (
+        <IncomePage
+          onAddTransaction={handleAddTransaction}
+          onAddTemplate={handleAddTemplate}
+          onDeleteTemplate={handleDeleteTemplate}
+          balance={balance}
+          templates={templates}
+          showToast={showToast}
+        />
       )}
-    </>
+      {activeTab === 'expense' && (
+        <ExpensePage
+          onAddTransaction={handleAddTransaction}
+          onAddTemplate={handleAddTemplate}
+          onDeleteTemplate={handleDeleteTemplate}
+          balance={balance}
+          templates={templates}
+          showToast={showToast}
+        />
+      )}
+      {activeTab === 'history' && (
+        <HistoryPage
+          transactions={transactions}
+          onDeleteTransaction={handleDeleteTransaction}
+          showToast={showToast}
+        />
+      )}
+      <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      {toastMessage && <Toast message={toastMessage} />}
+    </div>
   );
 }
 
