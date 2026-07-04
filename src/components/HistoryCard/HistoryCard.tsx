@@ -21,9 +21,9 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
       <button
         onClick={(e) => {
           e.stopPropagation();
-          if (confirm(`${transaction.memo}を削除しますか？`)) {
+          if (confirm(`「${transaction.memo}」を削除しますか？`)) {
             onDelete(transaction.id);
-            showToast('りれきを削除しました');
+            showToast('削除しました');
           }
         }}
       >

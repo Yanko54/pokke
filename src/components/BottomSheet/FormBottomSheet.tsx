@@ -67,8 +67,8 @@ export const FormBottomSheet = ({
   // ======= 取引登録 =======
   const handleSubmit = () => {
     const amount = Number(form.amount);
-    // 金額未入力・0円・マイナス金額の登録は許可しない
-    if (isNaN(amount) || amount <= 0) {
+    // 未入力・0円・マイナス・小数点以下の金額の登録は許可しない
+    if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
       alert('おかねをただしく入力してください');
       return;
     }
@@ -99,7 +99,7 @@ export const FormBottomSheet = ({
       alert('アイコンがないよ');
       return;
     }
-    if (isNaN(amount) || amount <= 0) {
+    if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
       alert('いくらかおしえてね');
       return;
     }
