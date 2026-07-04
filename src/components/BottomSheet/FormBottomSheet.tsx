@@ -20,6 +20,7 @@ type FormBottomSheetProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
   balance: number;
+  showToast: (message: string) => void;
 };
 
 export const FormBottomSheet = ({
@@ -30,6 +31,7 @@ export const FormBottomSheet = ({
   onAddTransaction,
   onAddTemplate,
   balance,
+  showToast,
 }: FormBottomSheetProps) => {
   // ======= State =======
   const [form, setForm] = useState<FormState>({
@@ -85,7 +87,7 @@ export const FormBottomSheet = ({
     };
 
     onAddTransaction(transaction);
-    alert('きろくしました');
+    showToast('きろくしました');
     onClose();
   };
 
@@ -110,7 +112,7 @@ export const FormBottomSheet = ({
     };
 
     onAddTemplate(newTemplate);
-    alert('テンプレートをつくりました');
+    showToast('テンプレートをつくりました');
     onClose();
   };
 

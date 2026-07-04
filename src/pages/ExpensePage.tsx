@@ -10,6 +10,7 @@ type ExpensePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
   onDeleteTemplate: (id: string) => void;
+  showToast: (message: string) => void;
   balance: number;
   templates: Template[];
 };
@@ -18,6 +19,7 @@ export const ExpensePage = ({
   onAddTransaction,
   onAddTemplate,
   onDeleteTemplate,
+  showToast,
   balance,
   templates,
 }: ExpensePageProps) => {
@@ -54,6 +56,7 @@ export const ExpensePage = ({
             setIsOpen(true);
           }}
           onDelete={onDeleteTemplate}
+          showToast={showToast}
         />
       ))}
       <FloatingActionButton
@@ -70,6 +73,7 @@ export const ExpensePage = ({
         onAddTransaction={onAddTransaction}
         onAddTemplate={onAddTemplate}
         balance={balance}
+        showToast={showToast}
       />
     </>
   );

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Header } from './components/Header/Header';
 import { Balance } from './components/Balance/Balance';
 import { FooterNav } from './components/FooterNav/FooterNav';
+import { Toast } from './components/Toast/Toast';
 import { IncomePage } from './pages/IncomePage';
 import { ExpensePage } from './pages/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage';
@@ -14,6 +15,7 @@ import type { Child, CreateChild } from './types/child';
 function App() {
   // ======= State =======
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
     const savedTransactions = localStorage.getItem('transactions');
     return savedTransactions ? JSON.parse(savedTransactions) : [];
@@ -72,6 +74,14 @@ function App() {
     });
   };
 
+  // ======= トースト表示 =======
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 2000);
+  };
+
   // ======= localStorage保存 =======
   // TODO: MVP完成後、useLocalStorageカスタムフックへ切り出し検討
   useEffect(() => {
@@ -103,6 +113,7 @@ function App() {
               onDeleteTemplate={handleDeleteTemplate}
               balance={balance}
               templates={templates}
+              showToast={showToast}
             />
           )}
           {activeTab === 'expense' && (
@@ -112,15 +123,18 @@ function App() {
               onDeleteTemplate={handleDeleteTemplate}
               balance={balance}
               templates={templates}
+              showToast={showToast}
             />
           )}
           {activeTab === 'history' && (
             <HistoryPage
               transactions={transactions}
               onDeleteTransaction={handleDeleteTransaction}
+              showToast={showToast}
             />
           )}
           <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
+          {toastMessage && <Toast message={toastMessage} />}
         </>
       )}
     </>

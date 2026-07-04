@@ -4,9 +4,10 @@ import { formatDate } from '../../utils/date';
 type HistoryCardProps = {
   transaction: Transaction;
   onDelete: (id: string) => void;
+  showToast: (message: string) => void;
 };
 
-export const HistoryCard = ({ transaction, onDelete }: HistoryCardProps) => {
+export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardProps) => {
   return (
     <div style={{ border: '1px solid #ccc', padding: '8px', margin: '8px' }}>
       <span>{transaction.icon}</span>
@@ -22,6 +23,7 @@ export const HistoryCard = ({ transaction, onDelete }: HistoryCardProps) => {
           e.stopPropagation();
           if (confirm(`${transaction.memo}を削除しますか？`)) {
             onDelete(transaction.id);
+            showToast('りれきを削除しました');
           }
         }}
       >

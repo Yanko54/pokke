@@ -10,6 +10,7 @@ type IncomePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
   onDeleteTemplate: (id: string) => void;
+  showToast: (message: string) => void;
   balance: number;
   templates: Template[];
 };
@@ -18,6 +19,7 @@ export const IncomePage = ({
   onAddTransaction,
   onAddTemplate,
   onDeleteTemplate,
+  showToast,
   balance,
   templates,
 }: IncomePageProps) => {
@@ -54,6 +56,7 @@ export const IncomePage = ({
             setIsOpen(true);
           }}
           onDelete={onDeleteTemplate}
+          showToast={showToast}
         />
       ))}
       <FloatingActionButton
@@ -70,6 +73,7 @@ export const IncomePage = ({
         onAddTransaction={onAddTransaction}
         onAddTemplate={onAddTemplate}
         balance={balance}
+        showToast={showToast}
       />
     </>
   );
