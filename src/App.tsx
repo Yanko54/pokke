@@ -69,7 +69,9 @@ function App() {
     const now = new Date().toISOString();
     setChild({
       ...child,
-      id: crypto.randomUUID(),
+      // TODO: デプロイ後、HTTPS環境で動作確認して crypto.randomUUID() に戻す
+      id: Date.now().toString(),
+      // id: crypto.randomUUID(),
       createdAt: now,
       updatedAt: now,
     });
