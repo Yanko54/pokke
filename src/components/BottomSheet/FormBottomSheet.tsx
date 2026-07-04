@@ -19,19 +19,19 @@ type FormBottomSheetProps = {
   transactionType: TransactionType;
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
-  balance: number;
   showToast: (message: string) => void;
+  balance: number;
 };
 
 export const FormBottomSheet = ({
   isOpen,
   onClose,
-  template,
   transactionType,
+  template,
   onAddTransaction,
   onAddTemplate,
-  balance,
   showToast,
+  balance,
 }: FormBottomSheetProps) => {
   // ======= State =======
   const [form, setForm] = useState<FormState>({
