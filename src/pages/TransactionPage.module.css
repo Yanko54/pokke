@@ -1,0 +1,29 @@
+.transactionPage {
+  padding: 0 var(--spacing-lg) 96px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: var(--spacing-md);
+  color: var(--color-brown);
+}
+
+.title h2 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}

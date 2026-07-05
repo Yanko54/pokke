@@ -1,11 +1,10 @@
+import type { FooterTab } from '../../types/footerTab';
 import incomeIcon from '../../assets/icons/navigation/income.svg';
 import incomeActiveIcon from '../../assets/icons/navigation/income-active.svg';
 import expenseIcon from '../../assets/icons/navigation/expense.svg';
 import expenseActiveIcon from '../../assets/icons/navigation/expense-active.svg';
 import historyIcon from '../../assets/icons/navigation/history.svg';
 import historyActiveIcon from '../../assets/icons/navigation/history-active.svg';
-
-import type { FooterTab } from '../../types/footerTab';
 import styles from './FooterNav.module.css';
 
 type FooterNavProps = {

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
-import type { Template, CreateTemplate } from '../types/template';
 import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
-import type { CreateTransaction } from '../types/transaction';
 import { FloatingActionButton } from '../components/FloatingActionButton/FloatingActionButton';
+import type { Template, CreateTemplate } from '../types/template';
+import type { CreateTransaction } from '../types/transaction';
+import incomeTitle from '../assets/icons/navigation/income-title.svg';
+import styles from './TransactionPage.module.css';
 
 // ======= Props =======
 type IncomePageProps = {
@@ -38,27 +40,26 @@ export const IncomePage = ({
 
   // ======= UI =======
   return (
-    <>
-      {incomeTemplates.length === 0 && (
-        <div>
-          <p>テンプレートをつくってね</p>
-        </div>
-      )}
-      <div>
+    <div className={styles.transactionPage}>
+      <div className={styles.title}>
+        <img className={styles.icon} src={incomeTitle} alt="" />
         <h2>もらう</h2>
       </div>
-      {incomeTemplates.map((template) => (
-        <TemplateCard
-          key={template.id}
-          template={template}
-          onClick={() => {
-            setSelectedTemplate(template);
-            setIsOpen(true);
-          }}
-          onDelete={onDeleteTemplate}
-          showToast={showToast}
-        />
-      ))}
+      {incomeTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+      <div className={styles.grid}>
+        {incomeTemplates.map((template) => (
+          <TemplateCard
+            key={template.id}
+            template={template}
+            onClick={() => {
+              setSelectedTemplate(template);
+              setIsOpen(true);
+            }}
+            onDelete={onDeleteTemplate}
+            showToast={showToast}
+          />
+        ))}
+      </div>
       <FloatingActionButton
         onClick={() => {
           setSelectedTemplate(null);
@@ -75,6 +76,6 @@ export const IncomePage = ({
         balance={balance}
         showToast={showToast}
       />
-    </>
+    </div>
   );
 };

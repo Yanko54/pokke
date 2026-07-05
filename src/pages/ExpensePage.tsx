@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
 import { TemplateCard } from '../components/TemplateCard/TemplateCard';
+import { FloatingActionButton } from '../components/FloatingActionButton/FloatingActionButton';
 import type { Template, CreateTemplate } from '../types/template';
 import type { CreateTransaction } from '../types/transaction';
-import { FloatingActionButton } from '../components/FloatingActionButton/FloatingActionButton';
+import expenseTitle from '../assets/icons/navigation/expense-title.svg';
+import styles from './TransactionPage.module.css';
 
 // ======= Props =======
 type ExpensePageProps = {
@@ -38,27 +40,26 @@ export const ExpensePage = ({
 
   // ======= UI =======
   return (
-    <>
-      {expenseTemplates.length === 0 && (
-        <div>
-          <p>テンプレートをつくってね</p>
-        </div>
-      )}
-      <div>
+    <div className={styles.transactionPage}>
+      <div className={styles.title}>
+        <img className={styles.icon} src={expenseTitle} alt="" />
         <h2>つかう</h2>
       </div>
-      {expenseTemplates.map((template) => (
-        <TemplateCard
-          key={template.id}
-          template={template}
-          onClick={() => {
-            setSelectedTemplate(template);
-            setIsOpen(true);
-          }}
-          onDelete={onDeleteTemplate}
-          showToast={showToast}
-        />
-      ))}
+      {expenseTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+      <div className={styles.grid}>
+        {expenseTemplates.map((template) => (
+          <TemplateCard
+            key={template.id}
+            template={template}
+            onClick={() => {
+              setSelectedTemplate(template);
+              setIsOpen(true);
+            }}
+            onDelete={onDeleteTemplate}
+            showToast={showToast}
+          />
+        ))}
+      </div>
       <FloatingActionButton
         onClick={() => {
           setSelectedTemplate(null);
@@ -75,6 +76,6 @@ export const ExpensePage = ({
         balance={balance}
         showToast={showToast}
       />
-    </>
+    </div>
   );
 };
