@@ -140,6 +140,7 @@ export const FormBottomSheet = ({
           <input
             type="text"
             inputMode="numeric"
+            maxLength={6}
             value={form.amount}
             onChange={(e) =>
               setForm({
@@ -152,6 +153,7 @@ export const FormBottomSheet = ({
           <input
             type="text"
             value={form.memo}
+            maxLength={20}
             onChange={(e) =>
               setForm({
                 ...form,

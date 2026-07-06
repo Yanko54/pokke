@@ -1,5 +1,6 @@
 .balance {
   width: 80%;
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -49,7 +49,7 @@ export const IncomePage = ({
       <div className={styles.grid}>
         {incomeTemplates.map((template) => (
           <TemplateCard
-            key={template.icon}
+            key={template.id}
             template={template}
             onClick={() => {
               setSelectedTemplate(template);
