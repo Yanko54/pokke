@@ -3,6 +3,7 @@ import type { Template, CreateTemplate } from '../../types/template';
 import type { TransactionType, CreateTransaction } from '../../types/transaction';
 import { BottomSheet } from './BottomSheet';
 import { IconPicker } from '../IconPicker/IconPicker';
+import { templateIcons } from '../../constants/icons';
 
 type FormState = {
   transactionType: TransactionType;
@@ -57,7 +58,7 @@ export const FormBottomSheet = ({
       // 新規登録時は空フォームを設定
       setForm({
         transactionType,
-        icon: '⭐️', // デフォルトアイコンを設定
+        icon: 'pokke', // デフォルトアイコン
         amount: '',
         memo: '',
       });
@@ -116,6 +117,8 @@ export const FormBottomSheet = ({
     onClose();
   };
 
+  const selectedIcon = templateIcons.find((item) => item.id === form.icon);
+
   // ======= UI =======
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
@@ -146,7 +149,6 @@ export const FormBottomSheet = ({
             }
             placeholder="いくら？"
           />
-
           <input
             type="text"
             value={form.memo}
@@ -158,7 +160,10 @@ export const FormBottomSheet = ({
             }
             placeholder="なにをした？"
           />
-          <button onClick={() => setMode('icon')}>{form.icon}アイコンをえらぶ</button>
+          <button onClick={() => setMode('icon')}>
+            {selectedIcon && <img src={selectedIcon.icon} alt="" />}
+            アイコンをえらぶ
+          </button>{' '}
           <button onClick={handleSubmit}>きろくする</button>
           <button onClick={handleAddTemplate}>テンプレートとして保存</button>
         </>

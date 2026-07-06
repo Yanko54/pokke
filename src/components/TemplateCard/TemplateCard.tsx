@@ -1,4 +1,6 @@
+import { templateIcons } from '../../constants/icons';
 import type { Template } from '../../types/template';
+import styles from './TemplateCard.module.css';
 
 type TemplateCardProps = {
   template: Template;
@@ -8,12 +10,24 @@ type TemplateCardProps = {
 };
 
 export const TemplateCard = ({ template, onClick, onDelete, showToast }: TemplateCardProps) => {
+  const selectedIcon = templateIcons.find((item) => item.id === template.icon);
   return (
-    <div style={{ border: '1px solid #ccc', padding: '8px', margin: '8px' }} onClick={onClick}>
-      <span>{template.icon}</span>
-      <span>{template.memo}</span>
-      <span>{template.amount}円</span>
+    <div className={styles.card} onClick={onClick}>
+      <div className={styles.content}>
+        <img className={styles.icon} src={selectedIcon?.icon} alt="" />
+        <p className={styles.memo}>{template.memo}</p>
+        <p
+          className={`${styles.amount} ${
+            template.transactionType === 'income' ? styles.income : styles.expense
+          }
+        `}
+        >
+          {template.amount}
+          <span>円</span>
+        </p>
+      </div>
       <button
+        className={styles.menuButton}
         onClick={(e) => {
           e.stopPropagation();
           if (confirm(`${template.memo}を削除しますか？`)) {

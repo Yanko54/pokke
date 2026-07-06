@@ -1,36 +1,23 @@
+import { templateIcons } from '../../constants/icons';
+
 type IconPickerProps = {
   selectedIcon: string;
   onSelectIcon: (icon: string) => void;
 };
 
-// ======= Icon Data =======
-const icons = [
-  { id: 'shirt', icon: '👕' },
-  { id: 'plate', icon: '🍽️' },
-  { id: 'cooking', icon: '🍳' },
-  { id: 'bed', icon: '🛏️' },
-  { id: 'broom', icon: '🧹' },
-  { id: 'purse', icon: '👛' },
-  { id: 'book', icon: '📚' },
-  { id: 'plant', icon: '🌱' },
-  { id: 'toy', icon: '🧸' },
-  { id: 'cookie', icon: '🍪' },
-  { id: 'heart', icon: '❤️' },
-  { id: 'pokke', icon: '⭐️' },
-];
 // ======= UI =======
 export const IconPicker = ({ selectedIcon, onSelectIcon }: IconPickerProps) => {
   return (
     <div>
       <h2>アイコンをえらぶ</h2>
-      {icons.map((item) => (
+      {templateIcons.map((item) => (
         <button
           key={item.id}
           type="button"
-          onClick={() => onSelectIcon(item.icon)}
-          className={selectedIcon === item.icon ? 'selected' : ''}
+          onClick={() => onSelectIcon(item.id)}
+          className={selectedIcon === item.id ? 'selected' : ''}
         >
-          {item.icon}
+          <img src={item.icon} alt="" />
         </button>
       ))}
     </div>

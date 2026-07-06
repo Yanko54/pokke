@@ -1,4 +1,5 @@
 import type { Transaction } from '../../types/transaction';
+import { templateIcons } from '../../constants/icons';
 import { formatDate } from '../../utils/date';
 
 type HistoryCardProps = {
@@ -8,9 +9,10 @@ type HistoryCardProps = {
 };
 
 export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardProps) => {
+  const selectedIcon = templateIcons.find((item) => item.id === transaction.icon);
   return (
     <div style={{ border: '1px solid #ccc', padding: '8px', margin: '8px' }}>
-      <span>{transaction.icon}</span>
+      <img src={selectedIcon?.icon} alt="" />
       <span>{transaction.memo}</span>
       <span>
         {transaction.transactionType === 'income'
