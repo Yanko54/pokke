@@ -9,6 +9,7 @@
   border-radius: var(--radius-md);
   background-color: var(--color-white);
   box-shadow: var(--shadow-card);
+  cursor: pointer;
 }
 
 .content {
@@ -64,12 +65,12 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  cursor: pointer;
-  border: none;
-  font-size: 24px;
-  color: var(--color-subtext);
-  background-color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  font-size: 24px;
+  color: var(--color-subtext);
+  background-color: transparent;
+  cursor: pointer;
 }

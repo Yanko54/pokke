@@ -1,0 +1,72 @@
+.card {
+  align-self: center;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--color-greige);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-subtext);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.memo {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.createdAt {
+  margin: 0;
+}
+
+.amount {
+  margin: 0;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.amount span {
+  font-size: 14px;
+}
+
+.income {
+  color: var(--color-denim);
+}
+
+.expense {
+  color: var(--color-coral);
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-size: 24px;
+  color: var(--color-subtext);
+  background-color: transparent;
+  cursor: pointer;
+}
