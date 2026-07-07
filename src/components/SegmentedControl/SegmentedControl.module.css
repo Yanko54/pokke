@@ -1,0 +1,37 @@
+.segmentedControl {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  padding: 1px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.sm {
+  height: 38px;
+}
+
+.md {
+  height: 44px;
+}
+
+.button {
+  height: 100%;
+  padding: 0 24px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  color: var(--color-subtext);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.active {
+  color: var(--color-white);
+  background-color: var(--color-denim);
+  border-radius: var(--radius-lg);
+}
