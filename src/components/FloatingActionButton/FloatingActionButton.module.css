@@ -1,0 +1,24 @@
+.fab {
+  position: fixed;
+  right: 32px;
+  bottom: 100px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  font-size: 40px;
+  line-height: 1;
+  background-color: var(--color-denim);
+  color: var(--color-white);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+.plus {
+  width: 24px;
+  height: 24px;
+}
