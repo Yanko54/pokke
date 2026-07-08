@@ -45,20 +45,22 @@ export const ExpensePage = ({
         <img className={styles.icon} src={expenseTitle} alt="" />
         <h2>つかう</h2>
       </div>
-      {expenseTemplates.length === 0 && <p>テンプレートをつくってね</p>}
-      <div className={styles.grid}>
-        {expenseTemplates.map((template) => (
-          <TemplateCard
-            key={template.id}
-            template={template}
-            onClick={() => {
-              setSelectedTemplate(template);
-              setIsOpen(true);
-            }}
-            onDelete={onDeleteTemplate}
-            showToast={showToast}
-          />
-        ))}
+      <div className={styles.content}>
+        {expenseTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+        <div className={styles.grid}>
+          {expenseTemplates.map((template) => (
+            <TemplateCard
+              key={template.id}
+              template={template}
+              onClick={() => {
+                setSelectedTemplate(template);
+                setIsOpen(true);
+              }}
+              onDelete={onDeleteTemplate}
+              showToast={showToast}
+            />
+          ))}
+        </div>
       </div>
       <FloatingActionButton
         onClick={() => {

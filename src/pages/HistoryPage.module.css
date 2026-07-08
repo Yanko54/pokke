@@ -1,6 +1,8 @@
 .historyPage {
+  height: 100%;
   width: 100%;
-  padding-bottom: 64px;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -23,10 +25,17 @@
   height: 30px;
 }
 
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .list {
   display: flex;
   flex-direction: column;
   max-width: 80%;
-  margin: var(--spacing-md) auto 0;
+  margin: 4px auto 0;
   gap: var(--spacing-md);
+  padding-bottom: 80px;
 }

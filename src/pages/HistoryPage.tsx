@@ -49,15 +49,17 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
         onChange={setFilterType}
         size="sm"
       />
-      <div className={styles.list}>
-        {sortedTransactions.map((transaction) => (
-          <HistoryCard
-            key={transaction.id}
-            transaction={transaction}
-            onDelete={onDeleteTransaction}
-            showToast={showToast}
-          />
-        ))}
+      <div className={styles.content}>
+        <div className={styles.list}>
+          {sortedTransactions.map((transaction) => (
+            <HistoryCard
+              key={transaction.id}
+              transaction={transaction}
+              onDelete={onDeleteTransaction}
+              showToast={showToast}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

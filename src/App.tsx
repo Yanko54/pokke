@@ -107,33 +107,35 @@ function App() {
     <div className={styles.app}>
       <Header childName={child.name} />
       <Balance amount={balance} />
-      {activeTab === 'income' && (
-        <IncomePage
-          onAddTransaction={handleAddTransaction}
-          onAddTemplate={handleAddTemplate}
-          onDeleteTemplate={handleDeleteTemplate}
-          balance={balance}
-          templates={templates}
-          showToast={showToast}
-        />
-      )}
-      {activeTab === 'expense' && (
-        <ExpensePage
-          onAddTransaction={handleAddTransaction}
-          onAddTemplate={handleAddTemplate}
-          onDeleteTemplate={handleDeleteTemplate}
-          balance={balance}
-          templates={templates}
-          showToast={showToast}
-        />
-      )}
-      {activeTab === 'history' && (
-        <HistoryPage
-          transactions={transactions}
-          onDeleteTransaction={handleDeleteTransaction}
-          showToast={showToast}
-        />
-      )}
+      <main className={styles.main}>
+        {activeTab === 'income' && (
+          <IncomePage
+            onAddTransaction={handleAddTransaction}
+            onAddTemplate={handleAddTemplate}
+            onDeleteTemplate={handleDeleteTemplate}
+            balance={balance}
+            templates={templates}
+            showToast={showToast}
+          />
+        )}
+        {activeTab === 'expense' && (
+          <ExpensePage
+            onAddTransaction={handleAddTransaction}
+            onAddTemplate={handleAddTemplate}
+            onDeleteTemplate={handleDeleteTemplate}
+            balance={balance}
+            templates={templates}
+            showToast={showToast}
+          />
+        )}
+        {activeTab === 'history' && (
+          <HistoryPage
+            transactions={transactions}
+            onDeleteTransaction={handleDeleteTransaction}
+            showToast={showToast}
+          />
+        )}
+      </main>
       <FooterNav activeTab={activeTab} setActiveTab={setActiveTab} />
       {toastMessage && <Toast message={toastMessage} />}
     </div>

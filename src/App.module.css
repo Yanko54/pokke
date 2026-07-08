@@ -1,9 +1,16 @@
  .app {
    width: 100%;
    max-width: 480px;
-   min-height: 100vh;
+   height: 100vh;
    margin: 0 auto;
    background-color: var(--color-beige);
    display: flex;
    flex-direction: column;
+   overflow: hidden;
+ }
+
+ .main {
+   flex: 1;
+   min-height: 0;
+   overflow: hidden;
  }

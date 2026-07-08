@@ -45,20 +45,22 @@ export const IncomePage = ({
         <img className={styles.icon} src={incomeTitle} alt="" />
         <h2>もらう</h2>
       </div>
-      {incomeTemplates.length === 0 && <p>テンプレートをつくってね</p>}
-      <div className={styles.grid}>
-        {incomeTemplates.map((template) => (
-          <TemplateCard
-            key={template.id}
-            template={template}
-            onClick={() => {
-              setSelectedTemplate(template);
-              setIsOpen(true);
-            }}
-            onDelete={onDeleteTemplate}
-            showToast={showToast}
-          />
-        ))}
+      <div className={styles.content}>
+        {incomeTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+        <div className={styles.grid}>
+          {incomeTemplates.map((template) => (
+            <TemplateCard
+              key={template.id}
+              template={template}
+              onClick={() => {
+                setSelectedTemplate(template);
+                setIsOpen(true);
+              }}
+              onDelete={onDeleteTemplate}
+              showToast={showToast}
+            />
+          ))}
+        </div>
       </div>
       <FloatingActionButton
         onClick={() => {
