@@ -1,0 +1,32 @@
+.historyPage {
+  width: 100%;
+  padding-bottom: 64px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  color: var(--color-brown);
+}
+
+.title h2 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  margin: var(--spacing-md) auto 0;
+  gap: var(--spacing-md);
+}

@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import type { Transaction } from '../types/transaction';
 import { HistoryCard } from '../components/HistoryCard/HistoryCard';
-import { SegmentedControl } from '../components/SegmentedControl/SegmentedContorol';
+import { SegmentedControl } from '../components/SegmentedControl/SegmentedControl';
+import historyTitle from '../assets/icons/navigation/history-title.svg';
+import type { Transaction } from '../types/transaction';
+import styles from './HistoryPage.module.css';
 
 // ======= Props =======
 type HistoryPageProps = {
@@ -36,24 +38,27 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
   );
   // ======= UI =======
   return (
-    <>
-      <div>
+    <div className={styles.historyPage}>
+      <div className={styles.title}>
+        <img className={styles.icon} src={historyTitle} alt="" />
         <h2>りれき</h2>
-        <SegmentedControl
-          options={filterOptions}
-          value={filterType}
-          onChange={setFilterType}
-          size="sm"
-        />
       </div>
-      {sortedTransactions.map((transaction) => (
-        <HistoryCard
-          key={transaction.id}
-          transaction={transaction}
-          onDelete={onDeleteTransaction}
-          showToast={showToast}
-        />
-      ))}
-    </>
+      <SegmentedControl
+        options={filterOptions}
+        value={filterType}
+        onChange={setFilterType}
+        size="sm"
+      />
+      <div className={styles.list}>
+        {sortedTransactions.map((transaction) => (
+          <HistoryCard
+            key={transaction.id}
+            transaction={transaction}
+            onDelete={onDeleteTransaction}
+            showToast={showToast}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
