@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { TransactionType, CreateTransaction } from '../../types/transaction';
+import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { BottomSheet } from './BottomSheet';
 import { IconPicker } from '../IconPicker/IconPicker';
 import { templateIcons } from '../../constants/icons';
+import styles from './FormBottomSheet.module.css';
 
 type FormState = {
   transactionType: TransactionType;
@@ -42,10 +44,13 @@ export const FormBottomSheet = ({
     memo: '',
   });
   const [mode, setMode] = useState<'form' | 'icon'>('form');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // ======= 初期値設定 =======
   useEffect(() => {
     if (!isOpen) return;
+    setErrorMessage('');
+    setMode('form');
     // template変更時にフォームの初期値を更新
     if (template) {
       setForm({
@@ -70,12 +75,12 @@ export const FormBottomSheet = ({
     const amount = Number(form.amount);
     // 未入力・0円・マイナス・小数点以下の金額の登録は許可しない
     if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
-      alert('おかねをただしく入力してください');
+      setErrorMessage('おかねをただしく入力してください');
       return;
     }
     // 残高不足チェック
-    if (transactionType === 'expense' && amount > balance) {
-      alert('おかねがたりません');
+    if (form.transactionType === 'expense' && amount > balance) {
+      setErrorMessage('おかねがたりません');
       return;
     }
 
@@ -87,6 +92,7 @@ export const FormBottomSheet = ({
       memo: form.memo || null,
     };
 
+    setErrorMessage('');
     onAddTransaction(transaction);
     showToast('きろくしました');
     onClose();
@@ -96,12 +102,8 @@ export const FormBottomSheet = ({
   const handleAddTemplate = () => {
     const amount = Number(form.amount);
 
-    if (!form.icon) {
-      alert('アイコンがないよ');
-      return;
-    }
     if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
-      alert('いくらかおしえてね');
+      setErrorMessage('おかねをただしく入力してください');
       return;
     }
 
@@ -119,69 +121,89 @@ export const FormBottomSheet = ({
 
   const selectedIcon = templateIcons.find((item) => item.id === form.icon);
 
+  const transactionTypeOptions: {
+    value: TransactionType;
+    label: string;
+  }[] = [
+    { value: 'income', label: 'もらう' },
+    { value: 'expense', label: 'つかう' },
+  ];
+
   // ======= UI =======
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <button
-        disabled={form.transactionType === 'income'}
-        onClick={() => setForm({ ...form, transactionType: 'income' })}
-      >
-        もらう
-      </button>
-      <button
-        disabled={form.transactionType === 'expense'}
-        onClick={() => setForm({ ...form, transactionType: 'expense' })}
-      >
-        つかう
-      </button>
-      {mode === 'form' ? (
-        // ---- フォーム画面 ----
-        <>
-          <input
-            type="text"
-            inputMode="numeric"
-            maxLength={6}
-            value={form.amount}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                amount: e.target.value,
-              })
-            }
-            placeholder="いくら？"
-          />
-          <input
-            type="text"
-            value={form.memo}
-            maxLength={20}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                memo: e.target.value,
-              })
-            }
-            placeholder="なにをした？"
-          />
-          <button onClick={() => setMode('icon')}>
-            {selectedIcon && <img src={selectedIcon.icon} alt="" />}
-            アイコンをえらぶ
-          </button>{' '}
-          <button onClick={handleSubmit}>きろくする</button>
-          <button onClick={handleAddTemplate}>テンプレートとして保存</button>
-        </>
-      ) : (
-        // ---- アイコン選択画面 ----
-        <>
-          <IconPicker
-            selectedIcon={form.icon}
-            onSelectIcon={(icon) => {
-              setForm({ ...form, icon });
-              setMode('form');
-            }}
-          />
-          <button onClick={() => setMode('form')}>もどる</button>
-        </>
-      )}
+      <div className={styles.content}>
+        <SegmentedControl<TransactionType>
+          options={transactionTypeOptions}
+          value={form.transactionType}
+          onChange={(transactionType) => setForm({ ...form, transactionType })}
+          size="md"
+        />
+        {mode === 'form' ? (
+          // ---- フォーム画面 ----
+          <>
+            <div className={styles.inputField}>
+              <label className={styles.label} htmlFor="amount">
+                いくら？
+              </label>
+              <div className={styles.amountInput}>
+                <input
+                  id="amount"
+                  className={styles.input}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  value={form.amount}
+                  placeholder="100"
+                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                />
+                <span className={styles.unit}>円</span>
+              </div>
+            </div>
+            <div className={styles.inputField}>
+              <label className={styles.label} htmlFor="memo">
+                なにをした？
+              </label>
+              <input
+                id="memo"
+                className={styles.input}
+                type="text"
+                maxLength={20}
+                value={form.memo}
+                placeholder={form.transactionType === 'income' ? 'おてつだい' : 'ガチャガチャ'}
+                onChange={(e) => setForm({ ...form, memo: e.target.value })}
+              />
+            </div>
+            <div className={styles.buttonArea}>
+              <button className={styles.iconButton} type="button" onClick={() => setMode('icon')}>
+                アイコンをえらぶ
+                {selectedIcon && <img src={selectedIcon.icon} alt="" />}
+              </button>
+              <p className={styles.errorMessage}>{errorMessage}</p>
+              <div className={styles.actionbuttons}>
+                <button className={styles.mainButton} type="button" onClick={handleSubmit}>
+                  きろくする
+                </button>
+                <button className={styles.subButton} type="button" onClick={handleAddTemplate}>
+                  テンプレートとして保存
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          // ---- アイコン選択画面 ----
+          <>
+            <IconPicker
+              selectedIcon={form.icon}
+              onSelectIcon={(icon) => {
+                setForm({ ...form, icon });
+                setMode('form');
+              }}
+            />
+            <button onClick={() => setMode('form')}>もどる</button>
+          </>
+        )}
+      </div>
     </BottomSheet>
   );
 };

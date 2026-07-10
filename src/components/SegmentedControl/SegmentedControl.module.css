@@ -1,7 +1,6 @@
 .segmentedControl {
   display: flex;
   justify-content: center;
-  margin-bottom: 12px;
 }
 
 .content {
@@ -17,7 +16,7 @@
 }
 
 .md {
-  height: 44px;
+  height: 42px;
 }
 
 .button {

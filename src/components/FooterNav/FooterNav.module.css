@@ -24,7 +24,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #AEAEB2;
+  color: var(--color-muted);
   font-size: 10px;
   font-weight: 500;
 }

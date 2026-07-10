@@ -29,10 +29,11 @@
 }
 
 .memo {
-  height: 48px;
   margin: 0;
-  display: flex;
-  align-items: center;
+  height: 48px;
+  line-height: 24px;
+  overflow: hidden;
+  word-break: break-word;
   color: var(--color-text);
   font-size: 16px;
   font-weight: 500;

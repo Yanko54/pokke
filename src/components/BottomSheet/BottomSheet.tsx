@@ -1,3 +1,5 @@
+import styles from './BottomSheet.module.css';
+
 type BottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -8,8 +10,10 @@ export const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => 
   if (!isOpen) return null;
 
   return (
-    <div onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()}>{children}</div>
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
     </div>
   );
 };
