@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { CreateChild } from '../types/child';
+import logo from '../assets/Pokke-logo.png';
+import styles from './WelcomePage.module.css';
 
 type WelcomePageProps = {
   onAddChild: (child: CreateChild) => void;
@@ -8,7 +10,8 @@ type WelcomePageProps = {
 export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
   const [childName, setChildName] = useState('');
   return (
-    <div>
+    <div className={styles.content}>
+      <img className={styles.logo} src={logo} alt="" />
       <h1>ポッケへようこそ！</h1>
       <p>
         こどものなまえを
@@ -16,14 +19,14 @@ export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
         とうろくしてね
       </p>
       <input
+        className={styles.input}
         type="text"
         placeholder="なまえ"
         value={childName}
-        onChange={(e) => {
-          setChildName(e.target.value);
-        }}
+        onChange={(e) => setChildName(e.target.value)}
       />
       <button
+        className={styles.button}
         onClick={() => {
           if (!childName.trim()) {
             alert('こどものなまえをいれてね');

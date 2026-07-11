@@ -18,7 +18,8 @@
 
 .input {
   width: 100%;
-  height: 48px;
+  max-width: 320px;
+  height: 56px;
   padding: 0 16px;
   border: 1px solid var(--color-greige);
   border-radius: var(--radius-lg);
@@ -76,8 +77,8 @@
 }
 
 .iconButton img {
-  width: 80px;
-  height: 80px;
+  width: 84px;
+  height: 84px;
   filter: var(--shadow-icon);
 }
 
@@ -92,7 +93,8 @@
 }
 
 .mainButton {
-  padding: 10px 24px;
+  min-width: 160px;
+  padding: 12px 24px;
   border: none;
   border-radius: 50px;
   background-color: var(--color-coin);
