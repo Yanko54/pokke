@@ -1,1 +1,28 @@
-.toast {}
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 72px;
+  display: flex;
+  justify-content: center;
+  z-index: 300;
+  pointer-events: none;
+}
+
+.content {
+  max-width: 320px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background-color: rgba(30, 30, 30, 0.85);
+}
+
+.content p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-white);
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
+}

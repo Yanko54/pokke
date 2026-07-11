@@ -7,7 +7,9 @@ type ToastProps = {
 export const Toast = ({ message }: ToastProps) => {
   return (
     <div className={styles.toast}>
-      <p>{message}</p>
+      <div className={styles.content}>
+        <p>{message}</p>
+      </div>
     </div>
   );
 };
