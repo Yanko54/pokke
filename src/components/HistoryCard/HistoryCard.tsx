@@ -16,7 +16,9 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
       <div className={styles.content}>
         <img className={styles.icon} src={selectedIcon?.icon} alt="" />
         <div className={styles.info}>
-          <p className={styles.memo}>{transaction.memo}</p>
+          <div className={styles.memoArea}>
+            <p className={styles.memo}>{transaction.memo}</p>
+          </div>
           <p className={styles.createdAt}>{formatDate(transaction.createdAt)}</p>
         </div>
         <p

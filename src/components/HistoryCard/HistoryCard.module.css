@@ -28,12 +28,16 @@
   row-gap: 4px;
 }
 
+.memoArea {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
 .memo {
   margin: 0;
-  height: 48px;
   line-height: 24px;
-  overflow: hidden;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   color: var(--color-text);
   font-size: 16px;
   font-weight: 500;
