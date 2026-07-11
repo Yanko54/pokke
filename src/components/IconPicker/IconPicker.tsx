@@ -1,4 +1,5 @@
 import { templateIcons } from '../../constants/icons';
+import styles from './IconPicker.module.css';
 
 type IconPickerProps = {
   selectedIcon: string;
@@ -8,18 +9,22 @@ type IconPickerProps = {
 // ======= UI =======
 export const IconPicker = ({ selectedIcon, onSelectIcon }: IconPickerProps) => {
   return (
-    <div>
-      <h2>アイコンをえらぶ</h2>
-      {templateIcons.map((item) => (
-        <button
-          key={item.id}
-          type="button"
-          onClick={() => onSelectIcon(item.id)}
-          className={selectedIcon === item.id ? 'selected' : ''}
-        >
-          <img src={item.icon} alt="" />
-        </button>
-      ))}
+    <div className={styles.content}>
+      <div className={styles.title}>
+        <h2>アイコンをえらぶ</h2>
+      </div>
+      <div className={styles.grid}>
+        {templateIcons.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onSelectIcon(item.id)}
+            className={`${styles.iconButton} ${selectedIcon === item.id ? styles.selected : ''}`}
+          >
+            <img src={item.icon} alt="" />
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

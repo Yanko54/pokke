@@ -133,15 +133,15 @@ export const FormBottomSheet = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.content}>
-        <SegmentedControl<TransactionType>
-          options={transactionTypeOptions}
-          value={form.transactionType}
-          onChange={(transactionType) => setForm({ ...form, transactionType })}
-          size="md"
-        />
         {mode === 'form' ? (
           // ---- フォーム画面 ----
           <>
+            <SegmentedControl<TransactionType>
+              options={transactionTypeOptions}
+              value={form.transactionType}
+              onChange={(transactionType) => setForm({ ...form, transactionType })}
+              size="md"
+            />
             <div className={styles.inputField}>
               <label className={styles.label} htmlFor="amount">
                 いくら？
@@ -200,7 +200,9 @@ export const FormBottomSheet = ({
                 setMode('form');
               }}
             />
-            <button onClick={() => setMode('form')}>もどる</button>
+            <button className={styles.subButton} onClick={() => setMode('form')}>
+              もどる
+            </button>
           </>
         )}
       </div>

@@ -19,11 +19,13 @@
   margin: 0;
   font-weight: 500;
   font-size: 20px;
+  text-shadow: var(--shadow-text);
 }
 
 .icon {
   width: 30px;
   height: 30px;
+  filter: var(--shadow-icon);
 }
 
 .content {

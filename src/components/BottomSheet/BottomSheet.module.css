@@ -9,12 +9,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  max-height: 80v;
-  display: flex;
-  justify-content: center;
+  height: 560px;
+  max-height: 80vh;
   padding: var(--spacing-lg);
-  padding-bottom: 64px;
+  display: flex;
   overflow-y: auto;
+  justify-content: center;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   background-color: var(--color-greige);
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
