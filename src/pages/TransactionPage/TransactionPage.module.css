@@ -23,7 +23,7 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin: var(--spacing-md) 0 var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   color: var(--color-brown);
 }
 

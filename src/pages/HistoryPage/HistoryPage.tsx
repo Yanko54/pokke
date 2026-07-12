@@ -43,12 +43,14 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
         <img className={styles.icon} src={historyTitle} alt="" />
         <h2>りれき</h2>
       </div>
-      <SegmentedControl
-        options={filterOptions}
-        value={filterType}
-        onChange={setFilterType}
-        size="sm"
-      />
+      <div className={styles.filter}>
+        <SegmentedControl
+          options={filterOptions}
+          value={filterType}
+          onChange={setFilterType}
+          size="sm"
+        />
+      </div>
       <div className={styles.content}>
         <div className={styles.list}>
           {sortedTransactions.map((transaction) => (
