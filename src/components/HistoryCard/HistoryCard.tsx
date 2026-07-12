@@ -5,7 +5,7 @@ import styles from './HistoryCard.module.css';
 
 type HistoryCardProps = {
   transaction: Transaction;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => boolean;
   showToast: (message: string) => void;
 };
 
@@ -35,16 +35,22 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
           className={styles.menuButton}
           onClick={(e) => {
             e.stopPropagation();
+
             if (
-              confirm(
+              !confirm(
                 transaction.memo
                   ? `「${transaction.memo}」を削除しますか？`
                   : 'この記録を削除しますか？',
               )
             ) {
-              onDelete(transaction.id);
-              showToast('削除しました');
+              return;
             }
+            const deleted = onDelete(transaction.id);
+            if (!deleted) {
+              alert('残高不足になるため\nこの履歴は削除できません');
+              return;
+            }
+            showToast('削除しました');
           }}
         >
           ⋮

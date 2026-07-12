@@ -8,7 +8,7 @@ import styles from './HistoryPage.module.css';
 // ======= Props =======
 type HistoryPageProps = {
   transactions: Transaction[];
-  onDeleteTransaction: (id: string) => void;
+  onDeleteTransaction: (id: string) => boolean;
   showToast: (message: string) => void;
 };
 type FilterType = 'all' | 'income' | 'expense';

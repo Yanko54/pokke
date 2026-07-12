@@ -53,7 +53,17 @@ function App() {
     ]);
   };
   const handleDeleteTransaction = (id: string) => {
+    const targetTransaction = transactions.find((transaction) => transaction.id === id);
+
+    if (!targetTransaction) return false;
+
+    if (targetTransaction.transactionType === 'income' && balance - targetTransaction.amount < 0) {
+      return false;
+    }
+
     setTransactions((prev) => prev.filter((transaction) => transaction.id !== id));
+
+    return true;
   };
 
   // ======= テンプレート追加・削除 =======
@@ -88,7 +98,7 @@ function App() {
     setToastMessage(message);
     setTimeout(() => {
       setToastMessage(null);
-    }, 1500);
+    }, 2000);
   };
 
   // ======= localStorage保存 =======
