@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { FormBottomSheet } from '../components/BottomSheet/FormBottomSheet';
-import { TemplateCard } from '../components/TemplateCard/TemplateCard';
-import { FloatingActionButton } from '../components/FloatingActionButton/FloatingActionButton';
-import type { Template, CreateTemplate } from '../types/template';
-import type { CreateTransaction } from '../types/transaction';
-import expenseTitle from '../assets/icons/navigation/expense-title.svg';
+import { TemplateCard } from '../../components/TemplateCard/TemplateCard';
+import { FormBottomSheet } from '../../components/BottomSheet/FormBottomSheet';
+import { FloatingActionButton } from '../../components/FloatingActionButton/FloatingActionButton';
+import type { Template, CreateTemplate } from '../../types/template';
+import type { CreateTransaction } from '../../types/transaction';
+import incomeTitle from '../../assets/icons/navigation/income-title.svg';
 import styles from './TransactionPage.module.css';
 
 // ======= Props =======
-type ExpensePageProps = {
+type IncomePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
   onDeleteTemplate: (id: string) => void;
@@ -17,20 +17,20 @@ type ExpensePageProps = {
   templates: Template[];
 };
 
-export const ExpensePage = ({
+export const IncomePage = ({
   onAddTransaction,
   onAddTemplate,
   onDeleteTemplate,
   showToast,
   balance,
   templates,
-}: ExpensePageProps) => {
+}: IncomePageProps) => {
   // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
-  // ======= 表示用expenseテンプレート =======
-  const expenseTemplates = templates.filter((template) => template.transactionType === 'expense');
+  // ======= 表示用incomeテンプレート =======
+  const incomeTemplates = templates.filter((template) => template.transactionType === 'income');
 
   // ======= フォーム制御 =======
   const handleClose = () => {
@@ -42,13 +42,13 @@ export const ExpensePage = ({
   return (
     <div className={styles.transactionPage}>
       <div className={styles.title}>
-        <img className={styles.icon} src={expenseTitle} alt="" />
-        <h2>つかう</h2>
+        <img className={styles.icon} src={incomeTitle} alt="" />
+        <h2>もらう</h2>
       </div>
       <div className={styles.content}>
-        {expenseTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+        {incomeTemplates.length === 0 && <p>テンプレートをつくってね</p>}
         <div className={styles.grid}>
-          {expenseTemplates.map((template) => (
+          {incomeTemplates.map((template) => (
             <TemplateCard
               key={template.id}
               template={template}
@@ -72,7 +72,7 @@ export const ExpensePage = ({
         isOpen={isOpen}
         onClose={handleClose}
         template={selectedTemplate}
-        transactionType={'expense'}
+        transactionType={'income'}
         onAddTransaction={onAddTransaction}
         onAddTemplate={onAddTemplate}
         balance={balance}

@@ -30,7 +30,13 @@ export const TemplateCard = ({ template, onClick, onDelete, showToast }: Templat
         className={styles.menuButton}
         onClick={(e) => {
           e.stopPropagation();
-          if (confirm(`${template.memo}を削除しますか？`)) {
+          if (
+            confirm(
+              template.memo
+                ? `「${template.memo}」を削除しますか？`
+                : 'このテンプレートを削除しますか？',
+            )
+          ) {
             onDelete(template.id);
             showToast('テンプレートを削除しました');
           }

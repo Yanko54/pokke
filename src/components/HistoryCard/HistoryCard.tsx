@@ -35,7 +35,13 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
           className={styles.menuButton}
           onClick={(e) => {
             e.stopPropagation();
-            if (confirm(`「${transaction.memo}」を削除しますか？`)) {
+            if (
+              confirm(
+                transaction.memo
+                  ? `「${transaction.memo}」を削除しますか？`
+                  : 'この記録を削除しますか？',
+              )
+            ) {
               onDelete(transaction.id);
               showToast('削除しました');
             }

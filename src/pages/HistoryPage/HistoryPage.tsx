@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { HistoryCard } from '../components/HistoryCard/HistoryCard';
-import { SegmentedControl } from '../components/SegmentedControl/SegmentedControl';
-import historyTitle from '../assets/icons/navigation/history-title.svg';
-import type { Transaction } from '../types/transaction';
+import { HistoryCard } from '../../components/HistoryCard/HistoryCard';
+import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl';
+import historyTitle from '../../assets/icons/navigation/history-title.svg';
+import type { Transaction } from '../../types/transaction';
 import styles from './HistoryPage.module.css';
 
 // ======= Props =======

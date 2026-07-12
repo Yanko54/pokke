@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { CreateChild } from '../types/child';
-import logo from '../assets/Pokke-logo.png';
+import type { CreateChild } from '../../types/child';
+import logo from '../../assets/Pokke-logo.png';
 import styles from './WelcomePage.module.css';
 
 type WelcomePageProps = {
