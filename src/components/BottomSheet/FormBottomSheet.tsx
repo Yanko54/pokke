@@ -37,11 +37,22 @@ export const FormBottomSheet = ({
   balance,
 }: FormBottomSheetProps) => {
   // ======= State =======
-  const [form, setForm] = useState<FormState>({
-    transactionType,
-    icon: '',
-    amount: '',
-    memo: '',
+  const [form, setForm] = useState<FormState>(() => {
+    if (template) {
+      return {
+        transactionType: template.transactionType,
+        icon: template.icon,
+        amount: String(template.amount),
+        memo: template.memo ?? '',
+      };
+    }
+
+    return {
+      transactionType,
+      icon: 'pokke',
+      amount: '',
+      memo: '',
+    };
   });
   const [mode, setMode] = useState<'form' | 'icon'>('form');
   const [errorMessage, setErrorMessage] = useState('');
