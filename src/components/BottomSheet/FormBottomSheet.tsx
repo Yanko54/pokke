@@ -121,6 +121,8 @@ export const FormBottomSheet = ({
 
   const selectedIcon = templateIcons.find((item) => item.id === form.icon);
 
+  const isAmountEmpty = form.amount.trim() === '';
+
   const transactionTypeOptions: {
     value: TransactionType;
     label: string;
@@ -184,10 +186,20 @@ export const FormBottomSheet = ({
               </button>
               <p className={styles.errorMessage}>{errorMessage}</p>
               <div className={styles.actionbuttons}>
-                <button className={styles.mainButton} type="button" onClick={handleSubmit}>
+                <button
+                  className={styles.mainButton}
+                  type="button"
+                  disabled={isAmountEmpty}
+                  onClick={handleSubmit}
+                >
                   きろくする
                 </button>
-                <button className={styles.subButton} type="button" onClick={handleAddTemplate}>
+                <button
+                  className={styles.subButton}
+                  type="button"
+                  disabled={isAmountEmpty}
+                  onClick={handleAddTemplate}
+                >
                   テンプレートとして保存
                 </button>
               </div>

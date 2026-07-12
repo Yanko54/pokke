@@ -29,11 +29,8 @@ export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
       />
       <button
         className={styles.button}
+        disabled={childName.trim() === ''}
         onClick={() => {
-          if (!childName.trim()) {
-            alert('こどものなまえをいれてね');
-            return;
-          }
           onAddChild({ name: childName.trim() });
         }}
       >

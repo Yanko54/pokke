@@ -105,12 +105,25 @@
   cursor: pointer;
 }
 
+.mainButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .subButton {
   border: none;
   color: var(--color-denim);
   font-weight: 500;
   cursor: pointer;
 }
+
+.subButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
 
 button:active {
   transform: scale(0.98);
