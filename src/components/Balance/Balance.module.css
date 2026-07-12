@@ -1,4 +1,4 @@
-.balance {
+.card {
   width: 80%;
   align-self: center;
   padding: 16px;
@@ -9,32 +9,33 @@
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 40px auto;
-  column-gap: 20px;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 8px;
 }
 
 .label {
-  grid-column: 2;
   margin: 0;
   font-size: 16px;
   font-weight: 500;
   color: var(--color-denim);
 }
 
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
 .icon {
-  grid-column: 1;
-  grid-row: 2;
   width: 40px;
   height: 40px;
   filter: var(--shadow-icon);
 }
 
 .amount {
-  grid-column: 2;
-  grid-row: 2;
   margin: 0;
   font-size: 32px;
   font-weight: 700;
