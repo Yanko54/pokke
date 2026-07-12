@@ -46,7 +46,9 @@ export const ExpensePage = ({
         <h2>つかう</h2>
       </div>
       <div className={styles.content}>
-        {expenseTemplates.length === 0 && <p>テンプレートをつくってね</p>}
+        {expenseTemplates.length === 0 && (
+          <p className={styles.emptyMessage}>テンプレートをつくってね</p>
+        )}
         <div className={styles.grid}>
           {expenseTemplates.map((template) => (
             <TemplateCard

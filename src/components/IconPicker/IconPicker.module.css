@@ -44,6 +44,14 @@
   filter: var(--shadow-icon);
 }
 
+.iconButton:active {
+  transform: scale(0.98);
+}
+
+.iconButton img:active {
+  transform: scale(0.98);
+}
+
 .selected {
   border-radius: var(--radius-lg);
   background-color: rgba(0, 0, 0, 0.03);

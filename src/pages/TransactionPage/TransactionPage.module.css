@@ -1,3 +1,15 @@
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-subtext);
+  font-size: 20px;
+}
+
 .transactionPage {
   height: 100%;
   width: 100%;
@@ -26,12 +38,6 @@
   width: 30px;
   height: 30px;
   filter: var(--shadow-icon);
-}
-
-.content {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 
 .grid {

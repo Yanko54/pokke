@@ -19,7 +19,7 @@
 .input {
   width: 100%;
   max-width: 320px;
-  height: 56px;
+  height: 52px;
   padding: 0 16px;
   border: 1px solid var(--color-greige);
   border-radius: var(--radius-lg);
@@ -110,6 +110,10 @@
   color: var(--color-denim);
   font-weight: 500;
   cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 .iconButton,

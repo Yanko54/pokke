@@ -23,6 +23,8 @@ export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
         type="text"
         placeholder="なまえ"
         value={childName}
+        maxLength={10}
+        autoFocus
         onChange={(e) => setChildName(e.target.value)}
       />
       <button

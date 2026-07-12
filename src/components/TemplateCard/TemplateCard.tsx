@@ -19,9 +19,9 @@ export const TemplateCard = ({ template, onClick, onDelete, showToast }: Templat
         <p
           className={`${styles.amount} ${
             template.transactionType === 'income' ? styles.income : styles.expense
-          }
-        `}
+          }`}
         >
+          {' '}
           {template.amount}
           <span>円</span>
         </p>

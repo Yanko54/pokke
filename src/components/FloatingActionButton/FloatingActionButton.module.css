@@ -18,6 +18,10 @@
   cursor: pointer;
 }
 
+.fab:active {
+  scale: (0.98);
+}
+
 .plus {
   width: 24px;
   height: 24px;

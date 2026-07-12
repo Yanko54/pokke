@@ -12,6 +12,11 @@
   cursor: pointer;
 }
 
+/* 
+.card:active {
+  transform: scale(0.98);
+} */
+
 .content {
   min-height: 128px;
   display: grid;

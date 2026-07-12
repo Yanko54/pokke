@@ -155,7 +155,10 @@ export const FormBottomSheet = ({
                   maxLength={6}
                   value={form.amount}
                   placeholder="100"
-                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, amount: e.target.value });
+                    setErrorMessage('');
+                  }}
                 />
                 <span className={styles.unit}>円</span>
               </div>
