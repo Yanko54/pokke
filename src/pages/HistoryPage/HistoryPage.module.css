@@ -5,10 +5,6 @@
   flex-direction: column;
 }
 
-.filter {
-  margin-bottom: var(--spacing-sm);
-}
-
 .title {
   display: flex;
   justify-content: center;
@@ -16,6 +12,10 @@
   gap: 8px;
   margin-bottom: var(--spacing-md);
   color: var(--color-brown);
+}
+
+.filter {
+  margin-bottom: var(--spacing-sm);
 }
 
 .title h2 {
