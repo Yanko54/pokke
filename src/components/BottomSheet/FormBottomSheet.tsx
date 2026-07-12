@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { TransactionType, CreateTransaction } from '../../types/transaction';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
@@ -45,30 +45,6 @@ export const FormBottomSheet = ({
   });
   const [mode, setMode] = useState<'form' | 'icon'>('form');
   const [errorMessage, setErrorMessage] = useState('');
-
-  // ======= 初期値設定 =======
-  useEffect(() => {
-    if (!isOpen) return;
-    setErrorMessage('');
-    setMode('form');
-    // template変更時にフォームの初期値を更新
-    if (template) {
-      setForm({
-        transactionType: template.transactionType,
-        icon: template.icon,
-        amount: String(template.amount), // inputは文字列で扱うためnumber → stringへ変換
-        memo: template.memo ?? '', // nullなら空文字を設定
-      });
-    } else {
-      // 新規登録時は空フォームを設定
-      setForm({
-        transactionType,
-        icon: 'pokke', // デフォルトアイコン
-        amount: '',
-        memo: '',
-      });
-    }
-  }, [isOpen, template, transactionType]);
 
   // ======= 取引登録 =======
   const handleSubmit = () => {

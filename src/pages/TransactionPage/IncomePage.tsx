@@ -70,16 +70,18 @@ export const IncomePage = ({
           setIsOpen(true);
         }}
       />
-      <FormBottomSheet
-        isOpen={isOpen}
-        onClose={handleClose}
-        template={selectedTemplate}
-        transactionType={'income'}
-        onAddTransaction={onAddTransaction}
-        onAddTemplate={onAddTemplate}
-        balance={balance}
-        showToast={showToast}
-      />
+      {isOpen && (
+        <FormBottomSheet
+          isOpen={isOpen}
+          onClose={handleClose}
+          template={selectedTemplate}
+          transactionType={'income'}
+          onAddTransaction={onAddTransaction}
+          onAddTemplate={onAddTemplate}
+          balance={balance}
+          showToast={showToast}
+        />
+      )}
     </div>
   );
 };
