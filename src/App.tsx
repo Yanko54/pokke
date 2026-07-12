@@ -98,7 +98,7 @@ function App() {
     setToastMessage(message);
     setTimeout(() => {
       setToastMessage(null);
-    }, 2000);
+    }, 1500);
   };
 
   // ======= localStorage保存 =======
