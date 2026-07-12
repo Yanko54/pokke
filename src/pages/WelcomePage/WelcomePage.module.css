@@ -11,14 +11,14 @@
 }
 
 .logo {
-  width: 280px;
+  width: 180px;
   height: auto;
 }
 
 .content h1 {
   margin: 0;
   color: var(--color-brown);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   text-shadow: var(--shadow-text);
 }
@@ -33,7 +33,7 @@
 
 .input {
   width: 80%;
-  max-width: 320px;
+  max-width: 280px;
   height: 52px;
   padding: 0 16px;
   border: 1px solid var(--color-greige);

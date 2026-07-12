@@ -9,11 +9,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 560px;
+  height: auto;
   max-height: 80vh;
   padding: var(--spacing-lg);
-  display: flex;
   overflow-y: auto;
+  display: flex;
   justify-content: center;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   background-color: var(--color-greige);

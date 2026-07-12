@@ -7,7 +7,7 @@
 .emptyMessage {
   text-align: center;
   color: var(--color-subtext);
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .transactionPage {

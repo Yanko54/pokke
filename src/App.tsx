@@ -13,6 +13,14 @@ import type { Template, CreateTemplate } from './types/template';
 import type { Child, CreateChild } from './types/child';
 import styles from './App.module.css';
 
+const createId = () => {
+  if (typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
 function App() {
   // ======= State =======
   const [activeTab, setActiveTab] = useState<FooterTab>('income');
@@ -41,7 +49,7 @@ function App() {
   const handleAddTransaction = (transaction: CreateTransaction) => {
     setTransactions((prev) => [
       ...prev,
-      { ...transaction, id: crypto.randomUUID(), createdAt: new Date().toISOString() },
+      { ...transaction, id: createId(), createdAt: new Date().toISOString() },
     ]);
   };
   const handleDeleteTransaction = (id: string) => {
@@ -54,7 +62,7 @@ function App() {
       ...prev,
       {
         ...template,
-        id: crypto.randomUUID(),
+        id: createId(),
         order: prev.length + 1,
         createdAt: new Date().toISOString(),
       },
@@ -69,9 +77,7 @@ function App() {
     const now = new Date().toISOString();
     setChild({
       ...child,
-      // TODO: デプロイ後、HTTPS環境で動作確認して crypto.randomUUID() に戻す
-      id: Date.now().toString(),
-      // id: crypto.randomUUID(),
+      id: createId(),
       createdAt: now,
       updatedAt: now,
     });
