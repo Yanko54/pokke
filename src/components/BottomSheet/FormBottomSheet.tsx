@@ -169,10 +169,9 @@ export const FormBottomSheet = ({
               <label className={styles.label} htmlFor="memo">
                 なにをした？
               </label>
-              <input
+              <textarea
                 id="memo"
                 className={styles.input}
-                type="text"
                 maxLength={20}
                 value={form.memo}
                 placeholder={form.transactionType === 'income' ? 'おてつだい' : 'ガチャガチャ'}
