@@ -66,9 +66,10 @@
 テンプレートから選んで「もらう・つかう」を記録できます。<br>
 テンプレートの追加や、自由入力による記録も可能です。
 
-<img src="docs/images/template.jpeg" width="220">
-<img src="docs/images/bottomsheet.jpeg" width="220">
-
+<p>
+  <img src="docs/images/template.jpeg" width="220">
+  <img src="docs/images/bottomsheet.jpeg" width="220">
+</p>
 ### 履歴確認
 
 残高は画面上部に常に表示しており<br>
