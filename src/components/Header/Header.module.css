@@ -1,7 +1,7 @@
 .header {
-  padding: 18px 24px 8px;
+  padding: 8px 24px;
   text-align: center;
   color: var(--color-subtext);
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 700;
 }
