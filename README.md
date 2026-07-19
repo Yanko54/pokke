@@ -70,6 +70,10 @@
   <img src="docs/images/template.jpeg" width="220">
   <img src="docs/images/bottomsheet.jpeg" width="220">
 </p>
+<p>
+  <img src="docs/images/template.jpeg" width="220">
+  <img src="docs/images/bottomsheet.jpeg" width="220">
+</p>
 
 ### 履歴確認
 
