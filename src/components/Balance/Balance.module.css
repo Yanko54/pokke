@@ -2,7 +2,7 @@
   width: 80%;
   align-self: center;
   padding: 16px;
-  margin: 16px 0;
+  margin: 12px 0 16px;
   background-color: var(--color-greige);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
