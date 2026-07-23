@@ -39,6 +39,25 @@
 <br>
 <img src="docs/images/scene_expense.png" alt="開発背景2" width="480">
 
+## ローカルでの起動方法
+
+### 必要な環境
+
+- Node.js 20.19以上
+- npm
+
+### 起動手順
+
+```bash
+git clone https://github.com/Yanko54/pokke.git
+cd pokke
+npm install
+npm run dev
+```
+
+起動後、ターミナルに表示されたURLへアクセスしてください。
+（http://localhost:5173など）
+
 ## デモ
 
 <https://pokke-chi.vercel.app>
@@ -66,10 +85,6 @@
 テンプレートから選んで「もらう・つかう」を記録できます。<br>
 テンプレートの追加や、自由入力による記録も可能です。
 
-<p>
-  <img src="docs/images/template.jpeg" width="220">
-  <img src="docs/images/bottomsheet.jpeg" width="220">
-</p>
 <p>
   <img src="docs/images/template.jpeg" width="220">
   <img src="docs/images/bottomsheet.jpeg" width="220">
