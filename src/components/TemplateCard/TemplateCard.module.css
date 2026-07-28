@@ -14,7 +14,7 @@
 
 
 .card:active {
-  transform: scale(0.98);
+  transform: scale(var(--scale-active));
 }
 
 .content {

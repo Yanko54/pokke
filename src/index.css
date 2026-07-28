@@ -28,6 +28,9 @@
   --shadow-card: 0px 2px 2px rgba(0, 0, 0, 0.25);
   --shadow-icon: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
   --shadow-text: 0 1px 2px rgba(0, 0, 0, 0.15);
+
+  /* Scale */
+  --scale-active: 0.95;
 }
 
 * {

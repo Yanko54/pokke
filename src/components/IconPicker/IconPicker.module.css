@@ -45,11 +45,11 @@
 }
 
 .iconButton:active {
-  transform: scale(0.98);
+  transform: scale(var(--scale-active));
 }
 
 .iconButton img:active {
-  transform: scale(0.98);
+  transform: scale(var(--scale-active));
 }
 
 .selected {
