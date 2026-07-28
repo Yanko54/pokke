@@ -159,7 +159,7 @@ export const FormBottomSheet = ({
               <textarea
                 id="memo"
                 className={styles.input}
-                maxLength={20}
+                maxLength={24}
                 value={form.memo}
                 placeholder={form.transactionType === 'income' ? 'おてつだい' : 'ガチャガチャ'}
                 onChange={(e) => setForm({ ...form, memo: e.target.value })}

@@ -15,7 +15,9 @@ export const TemplateCard = ({ template, onClick, onDelete, showToast }: Templat
     <div className={styles.card} onClick={onClick}>
       <div className={styles.content}>
         <img className={styles.icon} src={selectedIcon?.icon} alt="" />
-        <p className={styles.memo}>{template.memo}</p>
+        <div className={styles.memoWrapper}>
+          <p className={styles.memo}>{template.memo}</p>
+        </div>{' '}
         <p
           className={`${styles.amount} ${
             template.transactionType === 'income' ? styles.income : styles.expense
