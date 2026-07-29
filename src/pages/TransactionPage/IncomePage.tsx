@@ -48,9 +48,6 @@ export const IncomePage = ({
         <h2>もらう</h2>
       </div>
       <div className={styles.content}>
-        {incomeTemplates.length === 0 && (
-          <p className={styles.emptyMessage}>テンプレートをつくってね</p>
-        )}
         <div className={styles.grid}>
           {incomeTemplates.map((template) => (
             <TemplateCard

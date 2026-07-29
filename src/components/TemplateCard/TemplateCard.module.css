@@ -1,10 +1,10 @@
 .card {
   position: relative;
-  min-height: 160px;
+  height: 128px;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: 16px 0;
+  padding: 8px 0;
   border: 2px solid var(--color-white);
   border-radius: var(--radius-md);
   background-color: var(--color-white);
@@ -18,16 +18,14 @@
 }
 
 .content {
-  min-height: 128px;
   display: grid;
-  grid-template-rows: 48px 48px 28px;
+  grid-template-rows: 48px 32px 28px;
   justify-items: center;
   align-items: center;
-  row-gap: 4px;
 }
 
 .memoWrapper {
-  min-height: 48px;
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -38,7 +36,7 @@
   margin: 0;
   width: 80%;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: center;

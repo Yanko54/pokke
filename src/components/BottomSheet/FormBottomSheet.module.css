@@ -1,7 +1,7 @@
 .content {
   width: 80%;
   max-width: 320px;
-  min-height: 60vh;
+  min-height: 55vh;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
