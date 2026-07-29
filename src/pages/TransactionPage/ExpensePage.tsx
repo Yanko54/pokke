@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FormBottomSheet } from '../../components/BottomSheet/FormBottomSheet';
 import { TemplateCard } from '../../components/TemplateCard/TemplateCard';
+import { CreateTemplateCard } from '../../components/CreateTemplateCard/CreateTemplateCard ';
 import { FloatingActionButton } from '../../components/FloatingActionButton/FloatingActionButton';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { CreateTransaction } from '../../types/transaction';
@@ -28,6 +29,7 @@ export const ExpensePage = ({
   // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [mode, setMode] = useState<'transaction' | 'template'>('transaction');
 
   // ======= 表示用expenseテンプレート =======
   const expenseTemplates = templates.filter((template) => template.transactionType === 'expense');
@@ -52,21 +54,32 @@ export const ExpensePage = ({
         <div className={styles.grid}>
           {expenseTemplates.map((template) => (
             <TemplateCard
+              // 既存テンプレート展開
               key={template.id}
               template={template}
               onClick={() => {
                 setSelectedTemplate(template);
+                setMode('transaction');
                 setIsOpen(true);
               }}
               onDelete={onDeleteTemplate}
               showToast={showToast}
             />
           ))}
+          <CreateTemplateCard
+            // 新規テンプレート作成
+            onClick={() => {
+              setSelectedTemplate(null);
+              setMode('template');
+              setIsOpen(true);
+            }}
+          />
         </div>
       </div>
       <FloatingActionButton
         onClick={() => {
           setSelectedTemplate(null);
+          setMode('transaction');
           setIsOpen(true);
         }}
       />
@@ -74,8 +87,9 @@ export const ExpensePage = ({
         <FormBottomSheet
           isOpen={isOpen}
           onClose={handleClose}
+          mode={mode}
           template={selectedTemplate}
-          transactionType={'expense'}
+          transactionType={'income'}
           onAddTransaction={onAddTransaction}
           onAddTemplate={onAddTemplate}
           balance={balance}

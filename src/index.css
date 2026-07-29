@@ -6,6 +6,7 @@
   --color-beige: #FBF8F2;
   --color-greige: #F3EFE8;
   --color-brown: #CDA06B;
+  --color-light-gray: #DEDFE2;
   --color-text: #333333;
   --color-subtext: #777777;
   --color-muted: #AEAEB2;
@@ -42,4 +43,9 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   background-color: var(--color-beige);
   color: var(--color-text);
+}
+
+button {
+  font: inherit;
+  color: inherit;
 }

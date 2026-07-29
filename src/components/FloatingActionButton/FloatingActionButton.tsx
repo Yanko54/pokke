@@ -1,5 +1,5 @@
+import plusIcon from '../../assets/icons/plus-white.svg';
 import styles from './FloatingActionButton.module.css';
-import plusIcon from '../../assets/icons/plus.svg';
 
 type FloatingActionButtonProps = {
   onClick: () => void;
