@@ -1,4 +1,4 @@
-import plusIcon from '../../assets/icons/plus-navy.svg';
+import plusIcon from '../../assets/icons/common/plus-navy.svg';
 import styles from './CreateTemplateCard.module.css';
 
 type CreateTemplateCardProps = {

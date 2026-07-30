@@ -6,12 +6,19 @@
   padding: 0 var(--spacing-md);
 }
 
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
 .title {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-bottom: var(--spacing-md);
   color: var(--color-brown);
 }
 
@@ -20,6 +27,18 @@
   font-weight: 500;
   font-size: 20px;
   text-shadow: var(--shadow-text);
+}
+
+.reorderButton {
+  position: absolute;
+  right: 0;
+  min-width: 40px;
+  min-height: 32px;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-subtext);
+  cursor: pointer;
 }
 
 .icon {

@@ -1,4 +1,4 @@
-import plusIcon from '../../assets/icons/plus-white.svg';
+import plusIcon from '../../assets/icons/common/plus-white.svg';
 import styles from './FloatingActionButton.module.css';
 
 type FloatingActionButtonProps = {

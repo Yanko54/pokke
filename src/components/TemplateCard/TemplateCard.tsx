@@ -1,18 +1,27 @@
 import { templateIcons } from '../../constants/icons';
+import kebabIcon from '../../assets/icons/common/kebab.svg';
+import dragHandleIcon from '../../assets/icons/common/drag-handle.svg';
 import type { Template } from '../../types/template';
 import styles from './TemplateCard.module.css';
 
 type TemplateCardProps = {
   template: Template;
+  isReordering: boolean;
   onClick: () => void;
   onDelete: (id: string) => void;
   showToast: (message: string) => void;
 };
 
-export const TemplateCard = ({ template, onClick, onDelete, showToast }: TemplateCardProps) => {
+export const TemplateCard = ({
+  template,
+  isReordering,
+  onClick,
+  onDelete,
+  showToast,
+}: TemplateCardProps) => {
   const selectedIcon = templateIcons.find((item) => item.id === template.icon);
   return (
-    <div className={styles.card} onClick={onClick}>
+    <div className={`${styles.card} ${isReordering ? styles.reordering : ''}`} onClick={onClick}>
       <div className={styles.content}>
         <img className={styles.icon} src={selectedIcon?.icon} alt="" />
         <div className={styles.memoWrapper}>
@@ -44,7 +53,7 @@ export const TemplateCard = ({ template, onClick, onDelete, showToast }: Templat
           }
         }}
       >
-        ⋮
+        <img src={isReordering ? dragHandleIcon : kebabIcon} alt="" />{' '}
       </button>
     </div>
   );
