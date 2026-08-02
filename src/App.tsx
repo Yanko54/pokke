@@ -21,7 +21,7 @@ const createId = () => {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 };
 
-// 処理タイプごとのテンプレートをorder順に取得
+// transactionTypeごとのテンプレートをorder順で取得
 const getTemplatesByType = (templates: Template[], transactionType: TransactionType) => {
   return templates
     .filter((template) => template.transactionType === transactionType)
