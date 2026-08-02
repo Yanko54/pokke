@@ -7,8 +7,9 @@ import { IncomePage } from './pages/TransactionPage/IncomePage';
 import { ExpensePage } from './pages/TransactionPage/ExpensePage';
 import { HistoryPage } from './pages/HistoryPage/HistoryPage';
 import { WelcomePage } from './pages/WelcomePage/WelcomePage';
+import { arrayMove } from '@dnd-kit/sortable';
 import type { FooterTab } from './types/footerTab';
-import type { Transaction, CreateTransaction } from './types/transaction';
+import type { Transaction, CreateTransaction, TransactionType } from './types/transaction';
 import type { Template, CreateTemplate } from './types/template';
 import type { Child, CreateChild } from './types/child';
 import styles from './App.module.css';
@@ -17,8 +18,22 @@ const createId = () => {
   if (typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
   }
-
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
+// 処理タイプごとのテンプレートをorder順に取得
+const getTemplatesByType = (templates: Template[], transactionType: TransactionType) => {
+  return templates
+    .filter((template) => template.transactionType === transactionType)
+    .sort((a, b) => a.order - b.order);
+};
+
+// テンプレートのorderを1から振り直す
+const resetTemplateOrder = (templates: Template[]) => {
+  return templates.map((template, index) => ({
+    ...template,
+    order: index + 1,
+  }));
 };
 
 function App() {
@@ -56,30 +71,86 @@ function App() {
     const targetTransaction = transactions.find((transaction) => transaction.id === id);
 
     if (!targetTransaction) return false;
-
     if (targetTransaction.transactionType === 'income' && balance - targetTransaction.amount < 0) {
       return false;
     }
 
     setTransactions((prev) => prev.filter((transaction) => transaction.id !== id));
-
     return true;
   };
 
-  // ======= テンプレート追加・削除 =======
+  // ======= テンプレート処理 =======
+  const incomeTemplates = getTemplatesByType(templates, 'income');
+  const expenseTemplates = getTemplatesByType(templates, 'expense');
+
+  // 追加作成
   const handleAddTemplate = (template: CreateTemplate) => {
-    setTemplates((prev) => [
-      ...prev,
-      {
-        ...template,
-        id: createId(),
-        order: prev.length + 1,
-        createdAt: new Date().toISOString(),
-      },
-    ]);
+    setTemplates((prev) => {
+      const sameTypeTemplates = getTemplatesByType(prev, template.transactionType);
+      const nextOrder = Math.max(...sameTypeTemplates.map((item) => item.order), 0) + 1;
+      return [
+        ...prev,
+        {
+          ...template,
+          id: createId(),
+          order: nextOrder,
+          createdAt: new Date().toISOString(),
+        },
+      ];
+    });
   };
+
+  // 削除
   const handleDeleteTemplate = (id: string) => {
-    setTemplates((prev) => prev.filter((template) => template.id !== id));
+    setTemplates((prev) => {
+      const targetTemplate = prev.find((template) => template?.id === id);
+
+      if (!targetTemplate) return prev;
+
+      const otherTypeTemplates = prev.filter(
+        (template) => template && template.transactionType !== targetTemplate.transactionType,
+      );
+
+      const remainingTemplates = resetTemplateOrder(
+        prev.filter(
+          (template) =>
+            template &&
+            template.transactionType === targetTemplate.transactionType &&
+            template.id !== id,
+        ),
+      );
+
+      return [...otherTypeTemplates, ...remainingTemplates];
+    });
+  };
+
+  // 並び替え
+  const handleReorderTemplates = (
+    transactionType: TransactionType,
+    activeId: string,
+    overId: string,
+  ) => {
+    setTemplates((prev) => {
+      const targetTemplates = getTemplatesByType(prev, transactionType);
+      // 掴んだカードの位置
+      const oldIndex = targetTemplates.findIndex((template) => template.id === activeId);
+      // 移動先カードの位置
+      const newIndex = targetTemplates.findIndex((template) => template.id === overId);
+      if (oldIndex === -1 || newIndex === -1) return prev;
+
+      // 並び替えて、orderも新しい順番に更新
+      const reorderedTemplates = resetTemplateOrder(arrayMove(targetTemplates, oldIndex, newIndex));
+
+      let index = 0;
+
+      return prev.map((template) => {
+        if (template.transactionType !== transactionType) {
+          return template;
+        }
+
+        return reorderedTemplates[index++];
+      });
+    });
   };
 
   // ======= 子ども追加 =======
@@ -128,9 +199,10 @@ function App() {
           <IncomePage
             onAddTransaction={handleAddTransaction}
             onAddTemplate={handleAddTemplate}
+            onReorderTemplates={handleReorderTemplates}
             onDeleteTemplate={handleDeleteTemplate}
             balance={balance}
-            templates={templates}
+            incomeTemplates={incomeTemplates}
             showToast={showToast}
           />
         )}
@@ -139,8 +211,9 @@ function App() {
             onAddTransaction={handleAddTransaction}
             onAddTemplate={handleAddTemplate}
             onDeleteTemplate={handleDeleteTemplate}
+            onReorderTemplates={handleReorderTemplates}
             balance={balance}
-            templates={templates}
+            expenseTemplates={expenseTemplates}
             showToast={showToast}
           />
         )}

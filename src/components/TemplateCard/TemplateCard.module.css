@@ -16,15 +16,6 @@
   box-shadow:
     0 6px 16px rgba(0, 0, 0, 0.12),
     0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: grab;
-}
-
-.reordering:active {
-  cursor: grabbing;
-}
-
-.card:active {
-  transform: scale(var(--scale-active));
 }
 
 .content {
@@ -93,4 +84,18 @@
   color: var(--color-subtext);
   background-color: transparent;
   cursor: pointer;
+}
+
+.reordering {
+  touch-action: none;
+  cursor: grab;
+}
+
+.reordering .menuButton {
+  cursor: grab;
+}
+
+.reordering:active,
+.reordering:active .menuButton {
+  cursor: grabbing;
 }

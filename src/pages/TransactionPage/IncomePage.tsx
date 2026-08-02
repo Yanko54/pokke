@@ -3,6 +3,9 @@ import { TemplateCard } from '../../components/TemplateCard/TemplateCard';
 import { CreateTemplateCard } from '../../components/CreateTemplateCard/CreateTemplateCard ';
 import { FormBottomSheet } from '../../components/BottomSheet/FormBottomSheet';
 import { FloatingActionButton } from '../../components/FloatingActionButton/FloatingActionButton';
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import type { DragEndEvent } from '@dnd-kit/core';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { CreateTransaction } from '../../types/transaction';
 import incomeTitle from '../../assets/icons/navigation/income-title.svg';
@@ -14,18 +17,24 @@ type IncomePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
   onDeleteTemplate: (id: string) => void;
+  onReorderTemplates: (
+    transactionType: 'income' | 'expense',
+    activeId: string,
+    overId: string,
+  ) => void;
   showToast: (message: string) => void;
   balance: number;
-  templates: Template[];
+  incomeTemplates: Template[];
 };
 
 export const IncomePage = ({
   onAddTransaction,
   onAddTemplate,
   onDeleteTemplate,
+  onReorderTemplates,
   showToast,
   balance,
-  templates,
+  incomeTemplates,
 }: IncomePageProps) => {
   // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
@@ -33,13 +42,20 @@ export const IncomePage = ({
   const [mode, setMode] = useState<'transaction' | 'template'>('transaction');
   const [isReordering, setIsReordering] = useState(false);
 
-  // ======= 表示用incomeテンプレート =======
-  const incomeTemplates = templates.filter((template) => template.transactionType === 'income');
-
   // ======= フォーム制御 =======
   const handleClose = () => {
     setIsOpen(false);
     setSelectedTemplate(null);
+  };
+
+  // ======= テンプレ並び替え確定 =======
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e;
+
+    if (!over) return;
+    if (active.id === over.id) return;
+
+    onReorderTemplates('income', String(active.id), String(over.id));
   };
 
   // ======= UI =======
@@ -60,33 +76,40 @@ export const IncomePage = ({
         </button>
       </div>
       <div className={styles.content}>
-        <div className={styles.grid}>
-          {incomeTemplates.map((template) => (
-            <TemplateCard
-              // 既存テンプレート展開
-              key={template.id}
-              template={template}
-              isReordering={isReordering}
-              onClick={() => {
-                if (isReordering) return;
-                setSelectedTemplate(template);
-                setMode('transaction');
-                setIsOpen(true);
-              }}
-              onDelete={onDeleteTemplate}
-              showToast={showToast}
-            />
-          ))}
-          {!isReordering && (
-            <CreateTemplateCard
-              onClick={() => {
-                setSelectedTemplate(null);
-                setMode('template');
-                setIsOpen(true);
-              }}
-            />
-          )}{' '}
-        </div>
+        <DndContext onDragEnd={handleDragEnd}>
+          <SortableContext
+            items={incomeTemplates.map((template) => template.id)}
+            strategy={rectSortingStrategy}
+          >
+            <div className={styles.grid}>
+              {incomeTemplates.map((template) => (
+                <TemplateCard
+                  // 既存テンプレート展開
+                  key={template.id}
+                  template={template}
+                  isReordering={isReordering}
+                  onClick={() => {
+                    if (isReordering) return;
+                    setSelectedTemplate(template);
+                    setMode('transaction');
+                    setIsOpen(true);
+                  }}
+                  onDelete={onDeleteTemplate}
+                  showToast={showToast}
+                />
+              ))}
+              {!isReordering && (
+                <CreateTemplateCard
+                  onClick={() => {
+                    setSelectedTemplate(null);
+                    setMode('template');
+                    setIsOpen(true);
+                  }}
+                />
+              )}
+            </div>
+          </SortableContext>
+        </DndContext>
       </div>
       {!isReordering && (
         <FloatingActionButton
