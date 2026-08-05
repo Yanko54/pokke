@@ -14,10 +14,13 @@ type FormState = {
   memo: string;
 };
 
+type BottomSheetMode = 'transaction' | 'template';
+
 // ======= Props =======
 type FormBottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
+  mode: BottomSheetMode;
   template: Template | null;
   transactionType: TransactionType;
   onAddTransaction: (transaction: CreateTransaction) => void;
@@ -29,6 +32,7 @@ type FormBottomSheetProps = {
 export const FormBottomSheet = ({
   isOpen,
   onClose,
+  mode,
   transactionType,
   template,
   onAddTransaction,
@@ -54,7 +58,7 @@ export const FormBottomSheet = ({
       memo: '',
     };
   });
-  const [mode, setMode] = useState<'form' | 'icon'>('form');
+  const [viewMode, setViewMode] = useState<'form' | 'icon'>('form');
   const [errorMessage, setErrorMessage] = useState('');
 
   // ======= 取引登録 =======
@@ -122,7 +126,7 @@ export const FormBottomSheet = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.content}>
-        {mode === 'form' ? (
+        {viewMode === 'form' ? (
           // ---- フォーム画面 ----
           <>
             <SegmentedControl<TransactionType>
@@ -159,35 +163,42 @@ export const FormBottomSheet = ({
               <textarea
                 id="memo"
                 className={styles.input}
-                maxLength={20}
+                maxLength={24}
                 value={form.memo}
                 placeholder={form.transactionType === 'income' ? 'おてつだい' : 'ガチャガチャ'}
                 onChange={(e) => setForm({ ...form, memo: e.target.value })}
               />
             </div>
             <div className={styles.buttonArea}>
-              <button className={styles.iconButton} type="button" onClick={() => setMode('icon')}>
+              <button
+                className={styles.iconButton}
+                type="button"
+                onClick={() => setViewMode('icon')}
+              >
                 アイコンをえらぶ
                 {selectedIcon && <img src={selectedIcon.icon} alt="" />}
               </button>
               <p className={styles.errorMessage}>{errorMessage}</p>
               <div className={styles.actionbuttons}>
-                <button
-                  className={styles.mainButton}
-                  type="button"
-                  disabled={isAmountEmpty}
-                  onClick={handleSubmit}
-                >
-                  きろくする
-                </button>
-                <button
-                  className={styles.subButton}
-                  type="button"
-                  disabled={isAmountEmpty}
-                  onClick={handleAddTemplate}
-                >
-                  テンプレートとして保存
-                </button>
+                {mode === 'transaction' ? (
+                  <button
+                    className={styles.mainButton}
+                    type="button"
+                    disabled={isAmountEmpty}
+                    onClick={handleSubmit}
+                  >
+                    きろくする
+                  </button>
+                ) : (
+                  <button
+                    className={styles.mainButton}
+                    type="button"
+                    disabled={isAmountEmpty}
+                    onClick={handleAddTemplate}
+                  >
+                    つくる
+                  </button>
+                )}
               </div>
             </div>
           </>
@@ -198,10 +209,10 @@ export const FormBottomSheet = ({
               selectedIcon={form.icon}
               onSelectIcon={(icon) => {
                 setForm({ ...form, icon });
-                setMode('form');
+                setViewMode('form');
               }}
             />
-            <button className={styles.subButton} onClick={() => setMode('form')}>
+            <button className={styles.subButton} onClick={() => setViewMode('form')}>
               もどる
             </button>
           </>

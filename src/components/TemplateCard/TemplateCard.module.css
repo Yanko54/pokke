@@ -1,10 +1,10 @@
 .card {
   position: relative;
-  min-height: 160px;
+  height: 128px;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: 16px 0;
+  padding: 8px 0;
   border: 2px solid var(--color-white);
   border-radius: var(--radius-md);
   background-color: var(--color-white);
@@ -12,26 +12,47 @@
   cursor: pointer;
 }
 
+.reordering {
+  touch-action: none;
+  cursor: grab;
+}
 
-.card:active {
-  transform: scale(0.98);
+.dragging {
+  z-index: 10;
+  cursor: grabbing;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.reordering .menuButton {
+  cursor: grab;
+}
+
+.dragging .menuButton {
+  cursor: grabbing;
 }
 
 .content {
-  min-height: 128px;
   display: grid;
-  grid-template-rows: 48px 48px 28px;
+  grid-template-rows: 48px 32px 28px;
   justify-items: center;
   align-items: center;
-  row-gap: 4px;
+}
+
+.memoWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .memo {
   margin: 0;
   width: 80%;
-  min-height: 48px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: center;
@@ -78,4 +99,18 @@
   color: var(--color-subtext);
   background-color: transparent;
   cursor: pointer;
+}
+
+.reordering {
+  touch-action: none;
+  cursor: grab;
+}
+
+.reordering .menuButton {
+  cursor: grab;
+}
+
+.reordering:active,
+.reordering:active .menuButton {
+  cursor: grabbing;
 }

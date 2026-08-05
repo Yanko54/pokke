@@ -11,7 +11,7 @@
   bottom: 0;
   height: auto;
   max-height: 80vh;
-  padding: var(--spacing-lg);
+  padding: 48px 28px;
   overflow-y: auto;
   display: flex;
   justify-content: center;

@@ -6,6 +6,7 @@
   --color-beige: #FBF8F2;
   --color-greige: #F3EFE8;
   --color-brown: #CDA06B;
+  --color-light-gray: #DEDFE2;
   --color-text: #333333;
   --color-subtext: #777777;
   --color-muted: #AEAEB2;
@@ -28,6 +29,9 @@
   --shadow-card: 0px 2px 2px rgba(0, 0, 0, 0.25);
   --shadow-icon: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
   --shadow-text: 0 1px 2px rgba(0, 0, 0, 0.15);
+
+  /* Scale */
+  --scale-active: 0.95;
 }
 
 * {
@@ -39,4 +43,9 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   background-color: var(--color-beige);
   color: var(--color-text);
+}
+
+button {
+  font: inherit;
+  color: inherit;
 }
