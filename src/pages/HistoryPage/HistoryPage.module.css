@@ -13,7 +13,7 @@
   justify-content: flex-start;
   margin: 0 16px var(--spacing-md);
   padding: 0 8px 6px;
-  border-bottom: 2px solid var(--color-brown);
+  border-bottom: 1px solid var(--color-greige);
 }
 
 .title {
@@ -27,13 +27,11 @@
   margin: 0;
   font-weight: 500;
   font-size: 16px;
-  text-shadow: var(--shadow-text);
 }
 
 .icon {
   width: 28px;
   height: 28px;
-  filter: var(--shadow-icon);
 }
 
 .filter {
