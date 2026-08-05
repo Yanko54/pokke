@@ -22,7 +22,7 @@ export const TemplateCard = ({
   showToast,
 }: TemplateCardProps) => {
   // dnd-kit
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: template.id,
   });
   const selectedIcon = templateIcons.find((item) => item.id === template.icon);
@@ -33,7 +33,9 @@ export const TemplateCard = ({
         transform: CSS.Transform.toString(transform),
         transition,
       }}
-      className={`${styles.card} ${isReordering ? styles.reordering : ''}`}
+      className={`${styles.card} 
+        ${isReordering ? styles.reordering : ''}
+        ${isDragging ? styles.dragging : ''}`}
       onClick={onClick}
       {...(isReordering ? attributes : {})}
       {...(isReordering ? listeners : {})}

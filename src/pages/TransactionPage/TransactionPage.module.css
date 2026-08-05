@@ -4,19 +4,21 @@
   display: flex;
   flex-direction: column;
   padding: 0 var(--spacing-md);
+  transition: background-color 0.2s ease;
 }
 
 .sectionHeader {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-bottom: var(--spacing-md);
+  justify-content: space-between;
+  margin: 0 16px;
+  padding: 0 8px 6px;
+  border-bottom: 2px solid var(--color-brown);
 }
 
 .title {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 8px;
   color: var(--color-brown);
@@ -25,12 +27,17 @@
 .title h2 {
   margin: 0;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   text-shadow: var(--shadow-text);
 }
 
+.icon {
+  width: 28px;
+  height: 28px;
+  filter: var(--shadow-icon);
+}
+
 .reorderButton {
-  position: absolute;
   right: 0;
   min-width: 40px;
   min-height: 32px;
@@ -41,23 +48,35 @@
   cursor: pointer;
 }
 
-.icon {
-  width: 30px;
-  height: 30px;
-  filter: var(--shadow-icon);
+.finishButton {
+  min-width: 40px;
+  min-height: 28px;
+  margin: 2px 0;
+  border-radius: 8px;
+  color: var(--color-white);
+  background-color: var(--color-subtext);
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: var(--shadow-card);
 }
 
 .content {
   flex: 1;
   min-height: 0;
+  margin: 0 calc(var(--spacing-md) * -1);
+  padding: 0 var(--spacing-md);
   overflow-y: auto;
   scrollbar-width: none;
+}
+
+.reorderingPage {
+  background-color: #F7EFE0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--spacing-md);
-  margin-top: 0;
+  margin-top: 16px;
   padding-bottom: 80px;
 }

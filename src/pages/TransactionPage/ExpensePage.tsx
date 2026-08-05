@@ -68,14 +68,14 @@ export const ExpensePage = ({
         </div>
         <button
           type="button"
-          className={styles.reorderButton}
+          className={`${styles.reorderButton} ${isReordering ? styles.finishButton : ''}`}
           onClick={() => setIsReordering((prev) => !prev)}
           aria-label={isReordering ? '並び替えを終了する' : 'テンプレートを並び替える'}
         >
           {isReordering ? 'おわり' : '⇅'}
         </button>
       </div>
-      <div className={styles.content}>
+      <div className={`${styles.content} ${isReordering ? styles.reorderingPage : ''}`}>
         <DndContext onDragEnd={handleDragEnd}>
           <SortableContext
             items={expenseTemplates.map((template) => template.id)}
@@ -100,6 +100,7 @@ export const ExpensePage = ({
               ))}
               {!isReordering && (
                 <CreateTemplateCard
+                  // 新規テンプレート作成
                   onClick={() => {
                     setSelectedTemplate(null);
                     setMode('template');

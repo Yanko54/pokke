@@ -39,9 +39,11 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
   // ======= UI =======
   return (
     <div className={styles.historyPage}>
-      <div className={styles.title}>
-        <img className={styles.icon} src={historyTitle} alt="" />
-        <h2>りれき</h2>
+      <div className={styles.sectionHeader}>
+        <div className={styles.title}>
+          <img className={styles.icon} src={historyTitle} alt="" />
+          <h2>りれき</h2>
+        </div>
       </div>
       <div className={styles.filter}>
         <SegmentedControl
