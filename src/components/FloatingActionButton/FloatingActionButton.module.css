@@ -18,6 +18,12 @@
   cursor: pointer;
 }
 
+@media (min-width: 481px) {
+  .fab {
+    right: calc(50% - 240px + 32px);
+  }
+}
+
 .fab:active {
   transform: scale(var(--scale-active));
 }
