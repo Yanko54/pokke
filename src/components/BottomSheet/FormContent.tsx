@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { TransactionType, CreateTransaction } from '../../types/transaction';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
-import { IconPicker } from '../IconPicker/IconPicker';
+import { IconPicker } from './IconPicker';
 import { templateIcons } from '../../constants/icons';
 import styles from './FormContent.module.css';
 
