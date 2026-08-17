@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { TemplateCard } from '../../components/TemplateCard/TemplateCard';
 import { CreateTemplateCard } from '../../components/CreateTemplateCard/CreateTemplateCard ';
-import { FormBottomSheet } from '../../components/BottomSheet/FormBottomSheet';
+import { FormContent } from '../../components/BottomSheet/FormContent';
+import { BottomSheet } from '../../components/BottomSheet/BottomSheet';
 import { FloatingActionButton } from '../../components/FloatingActionButton/FloatingActionButton';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
@@ -122,17 +123,18 @@ export const IncomePage = ({
         />
       )}
       {isOpen && (
-        <FormBottomSheet
-          isOpen={isOpen}
-          onClose={handleClose}
-          mode={mode}
-          template={selectedTemplate}
-          transactionType={'income'}
-          onAddTransaction={onAddTransaction}
-          onAddTemplate={onAddTemplate}
-          balance={balance}
-          showToast={showToast}
-        />
+        <BottomSheet isOpen={isOpen} onClose={handleClose}>
+          <FormContent
+            onClose={handleClose}
+            mode={mode}
+            template={selectedTemplate}
+            transactionType="income"
+            onAddTransaction={onAddTransaction}
+            onAddTemplate={onAddTemplate}
+            balance={balance}
+            showToast={showToast}
+          />
+        </BottomSheet>
       )}
     </div>
   );
