@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import type { Template, CreateTemplate } from '../../types/template';
-import type { TransactionType, CreateTransaction } from '../../types/transaction';
+import type {
+  Transaction,
+  TransactionType,
+  CreateTransaction,
+  UpdateTransaction,
+  UpdateTransactionResult,
+} from '../../types/transaction';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { IconPicker } from './IconPicker';
 import { templateIcons } from '../../constants/icons';
@@ -13,33 +19,48 @@ type FormState = {
   memo: string;
 };
 
-type BottomSheetMode = 'transaction' | 'template';
+export type FormMode = 'createTransaction' | 'createTemplate' | 'editTransaction';
 
 // ======= Props =======
-type FormContentProps = {
+type BaseFormContentProps = {
   onClose: () => void;
-  mode: BottomSheetMode;
-  template: Template | null;
-  transactionType: TransactionType;
-  onAddTransaction: (transaction: CreateTransaction) => void;
-  onAddTemplate: (template: CreateTemplate) => void;
   showToast: (message: string) => void;
-  balance: number;
 };
 
-export const FormContent = ({
-  onClose,
-  mode,
-  transactionType,
-  template,
-  onAddTransaction,
-  onAddTemplate,
-  showToast,
-  balance,
-}: FormContentProps) => {
+type FormContentProps =
+  | (BaseFormContentProps & {
+      mode: 'createTransaction';
+      template: Template | null;
+      transactionType: TransactionType;
+      onAddTransaction: (transaction: CreateTransaction) => void;
+      balance: number;
+    })
+  | (BaseFormContentProps & {
+      mode: 'createTemplate';
+      transactionType: TransactionType;
+      onAddTemplate: (template: CreateTemplate) => void;
+    })
+  | (BaseFormContentProps & {
+      mode: 'editTransaction';
+      transaction: Transaction;
+      onUpdateTransaction: (id: string, transaction: UpdateTransaction) => UpdateTransactionResult;
+    });
+
+export const FormContent = (props: FormContentProps) => {
   // ======= State =======
   const [form, setForm] = useState<FormState>(() => {
-    if (template) {
+    if (props.mode === 'editTransaction') {
+      const { transaction } = props;
+      return {
+        transactionType: transaction.transactionType,
+        icon: transaction.icon,
+        amount: String(transaction.amount),
+        memo: transaction.memo ?? '',
+      };
+    }
+
+    if (props.mode === 'createTransaction' && props.template) {
+      const { template } = props;
       return {
         transactionType: template.transactionType,
         icon: template.icon,
@@ -49,7 +70,7 @@ export const FormContent = ({
     }
 
     return {
-      transactionType,
+      transactionType: props.transactionType,
       icon: 'pokke',
       amount: '',
       memo: '',
@@ -60,6 +81,9 @@ export const FormContent = ({
 
   // ======= 取引登録 =======
   const handleSubmit = () => {
+    if (props.mode !== 'createTransaction') return;
+    const { template, onAddTransaction, balance } = props;
+
     const amount = Number(form.amount);
     // 未入力・0円・マイナス・小数点以下の金額の登録は許可しない
     if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
@@ -82,14 +106,50 @@ export const FormContent = ({
 
     setErrorMessage('');
     onAddTransaction(transaction);
-    showToast('きろくしました');
-    onClose();
+    props.showToast('きろくしました');
+    props.onClose();
+  };
+
+  // ======= 取引編集 =======
+  const handleEditTransaction = () => {
+    if (props.mode !== 'editTransaction') return;
+    const { transaction, onUpdateTransaction } = props;
+
+    const amount = Number(form.amount);
+    if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
+      setErrorMessage('おかねをただしく入力してください');
+      return;
+    }
+
+    const updateTransaction: UpdateTransaction = {
+      transactionType: form.transactionType,
+      icon: form.icon,
+      amount: amount,
+      memo: form.memo || null,
+    };
+
+    const result = onUpdateTransaction(transaction.id, updateTransaction);
+    if (result === 'notEnoughBalance') {
+      setErrorMessage('おかねがたりなくなります');
+      return;
+    }
+
+    if (result === 'notFound') {
+      setErrorMessage('きろくがみつかりません');
+      return;
+    }
+
+    setErrorMessage('');
+    props.showToast('へんこうしました');
+    props.onClose();
   };
 
   // ======= テンプレート保存 =======
   const handleAddTemplate = () => {
-    const amount = Number(form.amount);
+    if (props.mode !== 'createTemplate') return;
+    const { onAddTemplate } = props;
 
+    const amount = Number(form.amount);
     if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
       setErrorMessage('おかねをただしく入力してください');
       return;
@@ -103,8 +163,8 @@ export const FormContent = ({
     };
 
     onAddTemplate(newTemplate);
-    showToast('テンプレートをつくりました');
-    onClose();
+    props.showToast('テンプレートをつくりました');
+    props.onClose();
   };
 
   const selectedIcon = templateIcons.find((item) => item.id === form.icon);
@@ -172,7 +232,7 @@ export const FormContent = ({
             </button>
             <p className={styles.errorMessage}>{errorMessage}</p>
             <div className={styles.actionbuttons}>
-              {mode === 'transaction' ? (
+              {props.mode === 'createTransaction' ? (
                 <button
                   className={styles.mainButton}
                   type="button"
@@ -181,7 +241,7 @@ export const FormContent = ({
                 >
                   きろくする
                 </button>
-              ) : (
+              ) : props.mode === 'createTemplate' ? (
                 <button
                   className={styles.mainButton}
                   type="button"
@@ -189,6 +249,15 @@ export const FormContent = ({
                   onClick={handleAddTemplate}
                 >
                   つくる
+                </button>
+              ) : (
+                <button
+                  className={styles.mainButton}
+                  type="button"
+                  disabled={isAmountEmpty}
+                  onClick={handleEditTransaction}
+                >
+                  へんこうする
                 </button>
               )}
             </div>

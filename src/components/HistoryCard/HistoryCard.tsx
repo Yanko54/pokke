@@ -1,15 +1,19 @@
-import type { Transaction } from '../../types/transaction';
+import { useState } from 'react';
 import { templateIcons } from '../../constants/icons';
 import { formatDate } from '../../utils/date';
+import type { Transaction } from '../../types/transaction';
 import styles from './HistoryCard.module.css';
+import { PopoverMenu } from './PopoverMenu';
 
 type HistoryCardProps = {
   transaction: Transaction;
+  onEdit: (transaction: Transaction) => void;
   onDelete: (id: string) => boolean;
   showToast: (message: string) => void;
 };
 
-export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardProps) => {
+export const HistoryCard = ({ transaction, onEdit, onDelete, showToast }: HistoryCardProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedIcon = templateIcons.find((item) => item.id === transaction.icon);
   return (
     <div className={styles.card}>
@@ -33,9 +37,20 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
         </p>
         <button
           className={styles.menuButton}
-          onClick={(e) => {
-            e.stopPropagation();
-
+          type="button"
+          aria-label="メニューをひらく"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          ⋮
+        </button>
+      </div>
+      {isMenuOpen && (
+        <PopoverMenu
+          onEdit={() => {
+            onEdit(transaction);
+            setIsMenuOpen(false);
+          }}
+          onDelete={() => {
             if (
               !confirm(
                 transaction.memo
@@ -50,12 +65,11 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
               alert('残高不足になるため\nこの履歴は削除できません');
               return;
             }
+            setIsMenuOpen(false);
             showToast('削除しました');
           }}
-        >
-          ⋮
-        </button>
-      </div>
+        />
+      )}
     </div>
   );
 };
