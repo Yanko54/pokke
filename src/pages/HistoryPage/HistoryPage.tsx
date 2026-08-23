@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import { HistoryCard } from '../../components/HistoryCard/HistoryCard';
 import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl';
+import { BottomSheet } from '../../components/BottomSheet/BottomSheet';
+import { FormContent } from '../../components/BottomSheet/FormContent';
 import historyTitle from '../../assets/icons/navigation/history-title.svg';
-import type { Transaction } from '../../types/transaction';
+import type {
+  Transaction,
+  UpdateTransaction,
+  UpdateTransactionResult,
+} from '../../types/transaction';
 import styles from './HistoryPage.module.css';
 
 // ======= Props =======
 type HistoryPageProps = {
   transactions: Transaction[];
   onDeleteTransaction: (id: string) => boolean;
+  onUpdateTransaction: (id: string, transaction: UpdateTransaction) => UpdateTransactionResult;
   showToast: (message: string) => void;
 };
 type FilterType = 'all' | 'income' | 'expense';
@@ -17,9 +24,16 @@ type FilterOption = {
   label: string;
 };
 
-export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: HistoryPageProps) => {
+export const HistoryPage = ({
+  transactions,
+  onDeleteTransaction,
+  onUpdateTransaction,
+  showToast,
+}: HistoryPageProps) => {
   // ======= State =======
   const [filterType, setFilterType] = useState<FilterType>('all');
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+
   // セグメントコントロール
   const filterOptions: FilterOption[] = [
     { value: 'all', label: 'すべて' },
@@ -36,6 +50,12 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
   const sortedTransactions = [...filteredTransactions].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
+
+  // フォーム制御
+  const handleClose = () => {
+    setSelectedTransaction(null);
+  };
+
   // ======= UI =======
   return (
     <div className={styles.historyPage}>
@@ -59,11 +79,23 @@ export const HistoryPage = ({ transactions, onDeleteTransaction, showToast }: Hi
             <HistoryCard
               key={transaction.id}
               transaction={transaction}
+              onEdit={setSelectedTransaction}
               onDelete={onDeleteTransaction}
               showToast={showToast}
             />
           ))}
         </div>
+        <BottomSheet isOpen={selectedTransaction !== null} onClose={handleClose}>
+          {selectedTransaction && (
+            <FormContent
+              mode="editTransaction"
+              transaction={selectedTransaction}
+              onUpdateTransaction={onUpdateTransaction}
+              onClose={handleClose}
+              showToast={showToast}
+            />
+          )}
+        </BottomSheet>
       </div>
     </div>
   );

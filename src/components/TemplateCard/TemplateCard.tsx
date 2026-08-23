@@ -1,8 +1,8 @@
 import { templateIcons } from '../../constants/icons';
-import kebabIcon from '../../assets/icons/common/kebab.svg';
-import dragHandleIcon from '../../assets/icons/common/drag-handle.svg';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import kebabIcon from '../../assets/icons/common/kebab.svg';
+import dragHandleIcon from '../../assets/icons/common/drag-handle.svg';
 import type { Template } from '../../types/template';
 import styles from './TemplateCard.module.css';
 
@@ -37,8 +37,6 @@ export const TemplateCard = ({
         ${isReordering ? styles.reordering : ''}
         ${isDragging ? styles.dragging : ''}`}
       onClick={onClick}
-      {...(isReordering ? attributes : {})}
-      {...(isReordering ? listeners : {})}
     >
       <div className={styles.content}>
         <img className={styles.icon} src={selectedIcon?.icon} alt="" />
@@ -71,6 +69,8 @@ export const TemplateCard = ({
             showToast('テンプレートを削除しました');
           }
         }}
+        {...(isReordering ? attributes : {})}
+        {...(isReordering ? listeners : {})}
       >
         <img src={isReordering ? dragHandleIcon : kebabIcon} alt="" />
       </button>

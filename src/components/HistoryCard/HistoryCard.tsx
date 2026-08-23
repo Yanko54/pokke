@@ -1,15 +1,20 @@
-import type { Transaction } from '../../types/transaction';
+import { useState } from 'react';
 import { templateIcons } from '../../constants/icons';
 import { formatDate } from '../../utils/date';
+import kebabIcon from '../../assets/icons/common/kebab.svg';
+import type { Transaction } from '../../types/transaction';
 import styles from './HistoryCard.module.css';
+import { PopoverMenu } from './PopoverMenu';
 
 type HistoryCardProps = {
   transaction: Transaction;
+  onEdit: (transaction: Transaction) => void;
   onDelete: (id: string) => boolean;
   showToast: (message: string) => void;
 };
 
-export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardProps) => {
+export const HistoryCard = ({ transaction, onEdit, onDelete, showToast }: HistoryCardProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedIcon = templateIcons.find((item) => item.id === transaction.icon);
   return (
     <div className={styles.card}>
@@ -33,29 +38,42 @@ export const HistoryCard = ({ transaction, onDelete, showToast }: HistoryCardPro
         </p>
         <button
           className={styles.menuButton}
-          onClick={(e) => {
-            e.stopPropagation();
-
-            if (
-              !confirm(
-                transaction.memo
-                  ? `「${transaction.memo}」を削除しますか？`
-                  : 'この記録を削除しますか？',
-              )
-            ) {
-              return;
-            }
-            const deleted = onDelete(transaction.id);
-            if (!deleted) {
-              alert('残高不足になるため\nこの履歴は削除できません');
-              return;
-            }
-            showToast('削除しました');
-          }}
+          type="button"
+          aria-label="メニューをひらく"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
         >
-          ⋮
+          <img src={kebabIcon} alt="" />
         </button>
       </div>
+      {isMenuOpen && (
+        <>
+          <div className={styles.menuBackdrop} onClick={() => setIsMenuOpen(false)} />
+          <PopoverMenu
+            onEdit={() => {
+              onEdit(transaction);
+              setIsMenuOpen(false);
+            }}
+            onDelete={() => {
+              if (
+                !confirm(
+                  transaction.memo
+                    ? `「${transaction.memo}」を削除しますか？`
+                    : 'この記録を削除しますか？',
+                )
+              ) {
+                return;
+              }
+              const deleted = onDelete(transaction.id);
+              if (!deleted) {
+                alert('残高不足になるため\nこの履歴は削除できません');
+                return;
+              }
+              setIsMenuOpen(false);
+              showToast('削除しました');
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { TemplateCard } from '../../components/TemplateCard/TemplateCard';
 import { CreateTemplateCard } from '../../components/CreateTemplateCard/CreateTemplateCard ';
-import { FormBottomSheet } from '../../components/BottomSheet/FormBottomSheet';
+import { FormContent } from '../../components/BottomSheet/FormContent';
+import { BottomSheet } from '../../components/BottomSheet/BottomSheet';
 import { FloatingActionButton } from '../../components/FloatingActionButton/FloatingActionButton';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
 import type { Template, CreateTemplate } from '../../types/template';
 import type { CreateTransaction } from '../../types/transaction';
+import type { FormMode } from '../../components/BottomSheet/FormContent';
 import incomeTitle from '../../assets/icons/navigation/income-title.svg';
 import reorderTitle from '../../assets/icons/navigation/reorder-title.svg';
 import styles from './TransactionPage.module.css';
@@ -39,7 +41,7 @@ export const IncomePage = ({
   // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
-  const [mode, setMode] = useState<'transaction' | 'template'>('transaction');
+  const [mode, setMode] = useState<FormMode>('createTransaction');
   const [isReordering, setIsReordering] = useState(false);
 
   // ======= フォーム制御 =======
@@ -91,7 +93,7 @@ export const IncomePage = ({
                   onClick={() => {
                     if (isReordering) return;
                     setSelectedTemplate(template);
-                    setMode('transaction');
+                    setMode('createTransaction');
                     setIsOpen(true);
                   }}
                   onDelete={onDeleteTemplate}
@@ -103,7 +105,7 @@ export const IncomePage = ({
                   // 新規テンプレート作成
                   onClick={() => {
                     setSelectedTemplate(null);
-                    setMode('template');
+                    setMode('createTemplate');
                     setIsOpen(true);
                   }}
                 />
@@ -116,23 +118,33 @@ export const IncomePage = ({
         <FloatingActionButton
           onClick={() => {
             setSelectedTemplate(null);
-            setMode('transaction');
+            setMode('createTransaction');
             setIsOpen(true);
           }}
         />
       )}
       {isOpen && (
-        <FormBottomSheet
-          isOpen={isOpen}
-          onClose={handleClose}
-          mode={mode}
-          template={selectedTemplate}
-          transactionType={'income'}
-          onAddTransaction={onAddTransaction}
-          onAddTemplate={onAddTemplate}
-          balance={balance}
-          showToast={showToast}
-        />
+        <BottomSheet isOpen={isOpen} onClose={handleClose}>
+          {mode === 'createTransaction' ? (
+            <FormContent
+              mode="createTransaction"
+              template={selectedTemplate}
+              transactionType="income"
+              onAddTransaction={onAddTransaction}
+              balance={balance}
+              onClose={handleClose}
+              showToast={showToast}
+            />
+          ) : (
+            <FormContent
+              mode="createTemplate"
+              transactionType="income"
+              onAddTemplate={onAddTemplate}
+              onClose={handleClose}
+              showToast={showToast}
+            />
+          )}
+        </BottomSheet>
       )}
     </div>
   );

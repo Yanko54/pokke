@@ -9,7 +9,13 @@ import { HistoryPage } from './pages/HistoryPage/HistoryPage';
 import { WelcomePage } from './pages/WelcomePage/WelcomePage';
 import { arrayMove } from '@dnd-kit/sortable';
 import type { FooterTab } from './types/footerTab';
-import type { Transaction, CreateTransaction, TransactionType } from './types/transaction';
+import type {
+  Transaction,
+  TransactionType,
+  CreateTransaction,
+  UpdateTransaction,
+  UpdateTransactionResult,
+} from './types/transaction';
 import type { Template, CreateTemplate } from './types/template';
 import type { Child, CreateChild } from './types/child';
 import styles from './App.module.css';
@@ -64,7 +70,7 @@ function App() {
   const handleAddTransaction = (transaction: CreateTransaction) => {
     setTransactions((prev) => [
       ...prev,
-      { ...transaction, id: createId(), createdAt: new Date().toISOString() },
+      { ...transaction, id: createId(), createdAt: new Date().toISOString(), updatedAt: null },
     ]);
   };
   const handleDeleteTransaction = (id: string) => {
@@ -77,6 +83,42 @@ function App() {
 
     setTransactions((prev) => prev.filter((transaction) => transaction.id !== id));
     return true;
+  };
+
+  const handleUpdateTransaction = (
+    id: string,
+    updatedTransaction: UpdateTransaction,
+  ): UpdateTransactionResult => {
+    const targetTransaction = transactions.find((transaction) => transaction.id === id);
+    if (!targetTransaction) return 'notFound';
+
+    // 編集後のマイナス残高防止バリデーション
+    const baseBalance =
+      targetTransaction.transactionType === 'income'
+        ? balance - targetTransaction.amount
+        : balance + targetTransaction.amount;
+    const nextBalance =
+      updatedTransaction.transactionType === 'income'
+        ? baseBalance + updatedTransaction.amount
+        : baseBalance - updatedTransaction.amount;
+
+    if (nextBalance < 0) {
+      return 'notEnoughBalance';
+    }
+
+    setTransactions((prev) =>
+      prev.map((transaction) =>
+        transaction.id === id
+          ? {
+              ...transaction,
+              ...updatedTransaction,
+              updatedAt: new Date().toISOString(),
+            }
+          : transaction,
+      ),
+    );
+
+    return 'success';
   };
 
   // ======= テンプレート処理 =======
@@ -221,6 +263,7 @@ function App() {
           <HistoryPage
             transactions={transactions}
             onDeleteTransaction={handleDeleteTransaction}
+            onUpdateTransaction={handleUpdateTransaction}
             showToast={showToast}
           />
         )}

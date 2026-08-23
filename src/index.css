@@ -49,3 +49,10 @@ button {
   font: inherit;
   color: inherit;
 }
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}

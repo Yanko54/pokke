@@ -13,24 +13,32 @@
 }
 
 .reordering {
+  cursor: default;
+}
+
+.reordering .menuButton {
   touch-action: none;
   cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.reordering .menuButton img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.reordering .menuButton:active,
+.dragging .menuButton {
+  cursor: grabbing;
 }
 
 .dragging {
   z-index: 10;
-  cursor: grabbing;
   box-shadow:
     0 10px 24px rgba(0, 0, 0, 0.2),
     0 4px 8px rgba(0, 0, 0, 0.12);
-}
-
-.reordering .menuButton {
-  cursor: grab;
-}
-
-.dragging .menuButton {
-  cursor: grabbing;
 }
 
 .content {
@@ -100,18 +108,4 @@
   color: var(--color-subtext);
   background-color: transparent;
   cursor: pointer;
-}
-
-.reordering {
-  touch-action: none;
-  cursor: grab;
-}
-
-.reordering .menuButton {
-  cursor: grab;
-}
-
-.reordering:active,
-.reordering:active .menuButton {
-  cursor: grabbing;
 }
