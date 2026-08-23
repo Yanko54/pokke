@@ -1,9 +1,14 @@
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="48" height="48" fill="url(#pattern0_200_64)"/>
-<defs>
-<pattern id="pattern0_200_64" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_200_64" transform="scale(0.0208333)"/>
-</pattern>
-<image id="image0_200_64" width="48" height="48" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAMKADAAQAAAABAAAAMAAAAADbN2wMAAAArklEQVRoBe2WwQ2AIBAE0X5syFIswFJsyILUNwEezBFiMv587F6cOQwp+UhAAhKYSWAZMXzbzyfvva9jyKw1H/S3dz9gtjENaAAScIUgQBzXAEYICzQAAeK4BjBCWFC94pauxHBWd7x1FXeFurEGBTUQBLK7pnqIuxu/YOkH0DqIZJYrROhFZDUQQZF0aIDQi8hqIIIi6dAAoReR1UAERdKhAULPrAQkIAEJTCfwAgV4DERviDlZAAAAAElFTkSuQmCC"/>
-</defs>
+<svg
+  width="48"
+  height="48"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M24 10V38M10 24H38"
+    stroke="#2D5A86"
+    stroke-width="5"
+    stroke-linecap="square"
+  />
 </svg>

@@ -1,8 +1,8 @@
 import { templateIcons } from '../../constants/icons';
-import kebabIcon from '../../assets/icons/common/kebab.svg';
-import dragHandleIcon from '../../assets/icons/common/drag-handle.svg';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import kebabIcon from '../../assets/icons/common/kebab.svg';
+import dragHandleIcon from '../../assets/icons/common/drag-handle.svg';
 import type { Template } from '../../types/template';
 import styles from './TemplateCard.module.css';
 

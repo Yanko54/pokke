@@ -1,0 +1,26 @@
+.menu {
+  position: absolute;
+  z-index: 30;
+  top: 40px;
+  right: 8px;
+  min-width: 80px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-greige);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menuItem+.menuItem {
+  border-top: 1px solid var(--color-greige);
+}
