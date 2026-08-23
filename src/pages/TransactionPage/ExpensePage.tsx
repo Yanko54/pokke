@@ -129,7 +129,7 @@ export const ExpensePage = ({
             <FormContent
               mode="createTransaction"
               template={selectedTemplate}
-              transactionType="income"
+              transactionType="expense"
               onAddTransaction={onAddTransaction}
               balance={balance}
               onClose={handleClose}
@@ -138,7 +138,7 @@ export const ExpensePage = ({
           ) : (
             <FormContent
               mode="createTemplate"
-              transactionType="income"
+              transactionType="expense"
               onAddTemplate={onAddTemplate}
               onClose={handleClose}
               showToast={showToast}
