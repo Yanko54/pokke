@@ -11,3 +11,5 @@ export type Template = {
   };
 
   export type CreateTemplate = Omit<Template, "id" | "order" | "createdAt">;
+
+export type UpdateTemplate = Pick<Template, "transactionType" | "icon" | "amount" | "memo">;

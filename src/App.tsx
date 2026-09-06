@@ -16,7 +16,7 @@ import type {
   UpdateTransaction,
   UpdateTransactionResult,
 } from './types/transaction';
-import type { Template, CreateTemplate } from './types/template';
+import type { Template, CreateTemplate, UpdateTemplate } from './types/template';
 import type { Child, CreateChild } from './types/child';
 import styles from './App.module.css';
 
@@ -142,6 +142,44 @@ function App() {
     });
   };
 
+  // 編集
+  const handleUpdateTemplate = (
+    id: string,
+    updatedTemplate: UpdateTemplate,
+  ): void => {
+    setTemplates((prev) => {
+      const targetTemplate = prev.find((template) => template.id === id);
+      if (!targetTemplate) return prev;
+
+      const { transactionType, icon, amount, memo } = updatedTemplate;
+      const isTypeChanged = targetTemplate.transactionType !== transactionType;
+      const nextOrder = isTypeChanged
+        ? Math.max(...getTemplatesByType(prev, transactionType).map((template) => template.order), 0) + 1
+        : targetTemplate.order;
+
+      // 移動元の表示順を保ったまま、残りのorderを連番にする
+      const remainingTemplates = isTypeChanged
+        ? resetTemplateOrder(
+            getTemplatesByType(prev, targetTemplate.transactionType).filter(
+              (template) => template.id !== id,
+            ),
+          )
+        : [];
+      const remainingOrders = new Map(
+        remainingTemplates.map((template) => [template.id, template.order]),
+      );
+
+      return prev.map((template) => {
+        if (template.id === id) {
+          return { ...template, transactionType, icon, amount, memo, order: nextOrder };
+        }
+
+        const order = remainingOrders.get(template.id);
+        return order === undefined ? template : { ...template, order };
+      });
+    });
+  };
+
   // 削除
   const handleDeleteTemplate = (id: string) => {
     setTemplates((prev) => {
@@ -241,6 +279,7 @@ function App() {
           <IncomePage
             onAddTransaction={handleAddTransaction}
             onAddTemplate={handleAddTemplate}
+            onUpdateTemplate={handleUpdateTemplate}
             onReorderTemplates={handleReorderTemplates}
             onDeleteTemplate={handleDeleteTemplate}
             balance={balance}
@@ -252,6 +291,7 @@ function App() {
           <ExpensePage
             onAddTransaction={handleAddTransaction}
             onAddTemplate={handleAddTemplate}
+            onUpdateTemplate={handleUpdateTemplate}
             onDeleteTemplate={handleDeleteTemplate}
             onReorderTemplates={handleReorderTemplates}
             balance={balance}

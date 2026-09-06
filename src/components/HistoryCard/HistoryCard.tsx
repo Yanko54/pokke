@@ -4,7 +4,7 @@ import { formatDate } from '../../utils/date';
 import kebabIcon from '../../assets/icons/common/kebab.svg';
 import type { Transaction } from '../../types/transaction';
 import styles from './HistoryCard.module.css';
-import { PopoverMenu } from './PopoverMenu';
+import { PopoverMenu } from '../PopoverMenu/PopoverMenu';
 
 type HistoryCardProps = {
   transaction: Transaction;

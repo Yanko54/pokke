@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { templateIcons } from '../../constants/icons';
+import { PopoverMenu } from '../PopoverMenu/PopoverMenu';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import kebabIcon from '../../assets/icons/common/kebab.svg';
@@ -10,6 +12,7 @@ type TemplateCardProps = {
   template: Template;
   isReordering: boolean;
   onClick: () => void;
+  onEdit: (template: Template) => void;
   onDelete: (id: string) => void;
   showToast: (message: string) => void;
 };
@@ -18,9 +21,11 @@ export const TemplateCard = ({
   template,
   isReordering,
   onClick,
+  onEdit,
   onDelete,
   showToast,
 }: TemplateCardProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   // dnd-kit
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: template.id,
@@ -54,26 +59,43 @@ export const TemplateCard = ({
       </div>
       <button
         type="button"
+        aria-label={isReordering ? 'テンプレートを並び替える' : 'メニューをひらく'}
         className={styles.menuButton}
         onClick={(e) => {
           e.stopPropagation();
           if (isReordering) return;
-          if (
-            confirm(
-              template.memo
-                ? `「${template.memo}」を削除しますか？`
-                : 'このテンプレートを削除しますか？',
-            )
-          ) {
-            onDelete(template.id);
-            showToast('テンプレートを削除しました');
-          }
+          setIsMenuOpen((prev) => !prev);
         }}
         {...(isReordering ? attributes : {})}
         {...(isReordering ? listeners : {})}
       >
         <img src={isReordering ? dragHandleIcon : kebabIcon} alt="" />
       </button>
+      {isMenuOpen && !isReordering && (
+        <div onClick={(e) => e.stopPropagation()}>
+          <div className={styles.menuBackdrop} onClick={() => setIsMenuOpen(false)} />
+          <PopoverMenu
+            onEdit={() => {
+              setIsMenuOpen(false);
+              onEdit(template);
+            }}
+            onDelete={() => {
+              if (
+                !confirm(
+                  template.memo
+                    ? `「${template.memo}」を削除しますか？`
+                    : 'このテンプレートを削除しますか？',
+                )
+              ) {
+                return;
+              }
+              onDelete(template.id);
+              setIsMenuOpen(false);
+              showToast('テンプレートを削除しました');
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
