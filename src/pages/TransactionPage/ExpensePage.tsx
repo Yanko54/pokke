@@ -7,7 +7,7 @@ import { FloatingActionButton } from '../../components/FloatingActionButton/Floa
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
-import type { Template, CreateTemplate } from '../../types/template';
+import type { Template, CreateTemplate, UpdateTemplate } from '../../types/template';
 import type { CreateTransaction } from '../../types/transaction';
 import type { FormMode } from '../../components/BottomSheet/FormContent';
 import expenseTitle from '../../assets/icons/navigation/expense-title.svg';
@@ -18,6 +18,7 @@ import styles from './TransactionPage.module.css';
 type ExpensePageProps = {
   onAddTransaction: (transaction: CreateTransaction) => void;
   onAddTemplate: (template: CreateTemplate) => void;
+  onUpdateTemplate: (id: string, updates: UpdateTemplate) => void;
   onDeleteTemplate: (id: string) => void;
   onReorderTemplates: (
     transactionType: 'income' | 'expense',
@@ -32,6 +33,7 @@ type ExpensePageProps = {
 export const ExpensePage = ({
   onAddTransaction,
   onAddTemplate,
+  onUpdateTemplate,
   onDeleteTemplate,
   onReorderTemplates,
   showToast,
@@ -40,6 +42,7 @@ export const ExpensePage = ({
 }: ExpensePageProps) => {
   // ======= State =======
   const [isOpen, setIsOpen] = useState(false);
+  // 取引作成の初期値、またはテンプレート編集の対象を保持する
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [mode, setMode] = useState<FormMode>('createTransaction');
   const [isReordering, setIsReordering] = useState(false);
@@ -97,6 +100,12 @@ export const ExpensePage = ({
                     setIsOpen(true);
                   }}
                   onDelete={onDeleteTemplate}
+                  onEdit={(template) => {
+                    if (isReordering) return;
+                    setSelectedTemplate(template);
+                    setMode('editTemplate');
+                    setIsOpen(true);
+                  }}
                   showToast={showToast}
                 />
               ))}
@@ -135,7 +144,7 @@ export const ExpensePage = ({
               onClose={handleClose}
               showToast={showToast}
             />
-          ) : (
+          ) : mode === 'createTemplate' ? (
             <FormContent
               mode="createTemplate"
               transactionType="expense"
@@ -143,7 +152,15 @@ export const ExpensePage = ({
               onClose={handleClose}
               showToast={showToast}
             />
-          )}
+          ) : mode === 'editTemplate' && selectedTemplate ? (
+            <FormContent
+              mode="editTemplate"
+              template={selectedTemplate}
+              onUpdateTemplate={onUpdateTemplate}
+              onClose={handleClose}
+              showToast={showToast}
+            />
+          ) : null}
         </BottomSheet>
       )}
     </div>

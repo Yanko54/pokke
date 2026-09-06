@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Template, CreateTemplate } from '../../types/template';
+import type { Template, CreateTemplate, UpdateTemplate } from '../../types/template';
 import type {
   Transaction,
   TransactionType,
@@ -19,7 +19,7 @@ type FormState = {
   memo: string;
 };
 
-export type FormMode = 'createTransaction' | 'createTemplate' | 'editTransaction';
+export type FormMode = 'createTransaction' | 'createTemplate' | 'editTransaction' | 'editTemplate';
 
 // ======= Props =======
 type BaseFormContentProps = {
@@ -44,18 +44,23 @@ type FormContentProps =
       mode: 'editTransaction';
       transaction: Transaction;
       onUpdateTransaction: (id: string, transaction: UpdateTransaction) => UpdateTransactionResult;
+    })
+  | (BaseFormContentProps & {
+      mode: 'editTemplate';
+      template: Template;
+      onUpdateTemplate: (id: string, updates: UpdateTemplate) => void;
     });
 
 export const FormContent = (props: FormContentProps) => {
   // ======= State =======
   const [form, setForm] = useState<FormState>(() => {
-    if (props.mode === 'editTransaction') {
-      const { transaction } = props;
+    if (props.mode === 'editTransaction' || props.mode === 'editTemplate') {
+      const source = props.mode === 'editTransaction' ? props.transaction : props.template;
       return {
-        transactionType: transaction.transactionType,
-        icon: transaction.icon,
-        amount: String(transaction.amount),
-        memo: transaction.memo ?? '',
+        transactionType: source.transactionType,
+        icon: source.icon,
+        amount: String(source.amount),
+        memo: source.memo ?? '',
       };
     }
 
@@ -80,7 +85,7 @@ export const FormContent = (props: FormContentProps) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // ======= 取引登録 =======
-  const handleSubmit = () => {
+  const handleCreateTransaction = () => {
     if (props.mode !== 'createTransaction') return;
     const { template, onAddTransaction, balance } = props;
 
@@ -111,7 +116,7 @@ export const FormContent = (props: FormContentProps) => {
   };
 
   // ======= 取引編集 =======
-  const handleEditTransaction = () => {
+  const handleUpdateTransaction = () => {
     if (props.mode !== 'editTransaction') return;
     const { transaction, onUpdateTransaction } = props;
 
@@ -145,9 +150,8 @@ export const FormContent = (props: FormContentProps) => {
   };
 
   // ======= テンプレート保存 =======
-  const handleAddTemplate = () => {
-    if (props.mode !== 'createTemplate') return;
-    const { onAddTemplate } = props;
+  const handleSaveTemplate = () => {
+    if (props.mode !== 'createTemplate' && props.mode !== 'editTemplate') return;
 
     const amount = Number(form.amount);
     if (isNaN(amount) || amount <= 0 || !Number.isInteger(amount)) {
@@ -155,15 +159,20 @@ export const FormContent = (props: FormContentProps) => {
       return;
     }
 
-    const newTemplate: CreateTemplate = {
+    const templateValues: UpdateTemplate = {
       transactionType: form.transactionType,
       icon: form.icon,
       amount: amount,
       memo: form.memo || null,
     };
 
-    onAddTemplate(newTemplate);
-    props.showToast('テンプレートをつくりました');
+    if (props.mode === 'editTemplate') {
+      props.onUpdateTemplate(props.template.id, templateValues);
+      props.showToast('テンプレートをへんこうしました');
+    } else {
+      props.onAddTemplate(templateValues);
+      props.showToast('テンプレートをつくりました');
+    }
     props.onClose();
   };
 
@@ -237,7 +246,7 @@ export const FormContent = (props: FormContentProps) => {
                   className={styles.mainButton}
                   type="button"
                   disabled={isAmountEmpty}
-                  onClick={handleSubmit}
+                  onClick={handleCreateTransaction}
                 >
                   きろくする
                 </button>
@@ -246,7 +255,7 @@ export const FormContent = (props: FormContentProps) => {
                   className={styles.mainButton}
                   type="button"
                   disabled={isAmountEmpty}
-                  onClick={handleAddTemplate}
+                  onClick={handleSaveTemplate}
                 >
                   つくる
                 </button>
@@ -255,7 +264,9 @@ export const FormContent = (props: FormContentProps) => {
                   className={styles.mainButton}
                   type="button"
                   disabled={isAmountEmpty}
-                  onClick={handleEditTransaction}
+                  onClick={
+                    props.mode === 'editTemplate' ? handleSaveTemplate : handleUpdateTransaction
+                  }
                 >
                   へんこうする
                 </button>
