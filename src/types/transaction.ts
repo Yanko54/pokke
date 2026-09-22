@@ -4,6 +4,7 @@
  
  export type Transaction = {
     id: string;
+    childId: string;
     templateId: string | null
     transactionType: TransactionType;
     icon: string;
@@ -13,7 +14,7 @@
     updatedAt?: string | null;
   };
 
-export type CreateTransaction = Omit<Transaction, "id" | "createdAt" | "updatedAt">;
+export type CreateTransaction = Omit<Transaction, "id" | "childId" | "createdAt" | "updatedAt">;
 export type UpdateTransaction = Pick<Transaction, "transactionType" | "icon" | "amount" | "memo">;
 
 export type UpdateTransactionResult =
@@ -22,4 +23,3 @@ export type UpdateTransactionResult =
   | 'notEnoughBalance';  
 
   
-
