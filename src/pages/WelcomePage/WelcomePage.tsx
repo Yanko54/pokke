@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import type { CreateChild } from '../../types/child';
+import { ChildForm } from '../../components/ChildForm/ChildForm';
 import logo from '../../assets/Pokke-logo.png';
 import styles from './WelcomePage.module.css';
 
 type WelcomePageProps = {
-  onAddChild: (child: CreateChild) => void;
+  onAddChild: (name: string) => string | null;
+  validateName: (name: string) => string | null;
 };
 
-export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
-  const [childName, setChildName] = useState('');
+export const WelcomePage = ({ onAddChild, validateName }: WelcomePageProps) => {
   return (
     <div className={styles.content}>
       <img className={styles.logo} src={logo} alt="" />
@@ -18,24 +17,7 @@ export const WelcomePage = ({ onAddChild }: WelcomePageProps) => {
         <br />
         とうろくしてね
       </p>
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="なまえ"
-        value={childName}
-        maxLength={10}
-        autoFocus
-        onChange={(e) => setChildName(e.target.value)}
-      />
-      <button
-        className={styles.button}
-        disabled={childName.trim() === ''}
-        onClick={() => {
-          onAddChild({ name: childName.trim() });
-        }}
-      >
-        とうろく
-      </button>
+      <ChildForm mode="create" submitLabel="とうろく" validateName={validateName} onSubmit={onAddChild} />
     </div>
   );
 };

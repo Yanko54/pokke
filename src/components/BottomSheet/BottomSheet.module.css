@@ -1,7 +1,21 @@
-.overlay {
+.dialog {
   position: fixed;
   inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: inherit;
   z-index: 200;
+}
+
+.dialog::backdrop {
+  background: transparent;
 }
 
 .sheet {

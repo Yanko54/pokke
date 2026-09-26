@@ -1,0 +1,27 @@
+.content {
+  width: 80%;
+  max-width: 320px;
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.submitButton {
+  min-width: 160px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  background-color: var(--color-coin);
+  color: var(--color-denim);
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
