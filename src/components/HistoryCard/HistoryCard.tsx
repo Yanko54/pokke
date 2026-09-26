@@ -4,7 +4,7 @@ import { formatDate } from '../../utils/date';
 import kebabIcon from '../../assets/icons/common/kebab.svg';
 import type { Transaction } from '../../types/transaction';
 import styles from './HistoryCard.module.css';
-import { PopoverMenu } from '../PopoverMenu/PopoverMenu';
+import { CardActionPopover } from '../CardActionPopover/CardActionPopover';
 
 type HistoryCardProps = {
   transaction: Transaction;
@@ -48,7 +48,7 @@ export const HistoryCard = ({ transaction, onEdit, onDelete, showToast }: Histor
       {isMenuOpen && (
         <>
           <div className={styles.menuBackdrop} onClick={() => setIsMenuOpen(false)} />
-          <PopoverMenu
+          <CardActionPopover
             onEdit={() => {
               onEdit(transaction);
               setIsMenuOpen(false);

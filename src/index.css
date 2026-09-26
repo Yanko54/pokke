@@ -45,6 +45,12 @@ body {
   color: var(--color-text);
 }
 
+@media (min-width: 481px) {
+  body {
+    background-color: #F6F2EC;
+  }
+}
+
 button {
   font: inherit;
   color: inherit;

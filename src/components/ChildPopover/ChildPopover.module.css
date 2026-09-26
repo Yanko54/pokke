@@ -1,0 +1,90 @@
+.popover {
+  position: absolute;
+  z-index: 31;
+  top: 100%;
+  left: 50%;
+  width: 80%;
+  max-width: 320px;
+  max-height: min(60vh, 420px);
+  transform: translateX(-50%);
+  overflow-y: auto;
+  border: 1px solid var(--color-greige);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  font-size: 16px;
+  text-align: left;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.row::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  border-bottom: 1px solid var(--color-greige);
+  pointer-events: none;
+}
+
+.currentRow {
+  background-color: #F7EFE0;
+}
+
+.selectButton {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-sm);
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.checkIcon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.editButton {
+  min-width: 44px;
+  min-height: 44px;
+  margin: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pencilIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.addButton {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px;
+  border: 0;
+  background: transparent;
+  color: var(--color-denim);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}

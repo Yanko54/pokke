@@ -1,7 +1,21 @@
-.overlay {
+.dialog {
   position: fixed;
   inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: inherit;
   z-index: 200;
+}
+
+.dialog::backdrop {
+  background: transparent;
 }
 
 .sheet {
@@ -9,7 +23,10 @@
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  max-width: 480px;
   height: auto;
+  margin: 0 auto;
   max-height: 80vh;
   padding: 48px 28px;
   overflow-y: auto;
@@ -18,4 +35,24 @@
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   background-color: var(--color-greige);
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dialog[open] .sheet {
+  animation: sheet-slide-in 220ms ease-out;
+}
+
+@keyframes sheet-slide-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] .sheet {
+    animation: none;
+  }
 }

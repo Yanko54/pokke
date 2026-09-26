@@ -11,6 +11,7 @@ import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { IconPicker } from './IconPicker';
 import { templateIcons } from '../../constants/icons';
 import styles from './FormContent.module.css';
+import sheetStyles from './BottomSheetForm.module.css';
 
 type FormState = {
   transactionType: TransactionType;
@@ -190,7 +191,7 @@ export const FormContent = (props: FormContentProps) => {
 
   // ======= UI =======
   return (
-    <div className={styles.content}>
+    <div className={sheetStyles.content}>
       {viewMode === 'form' ? (
         // ---- フォーム画面 ----
         <>
@@ -243,7 +244,7 @@ export const FormContent = (props: FormContentProps) => {
             <div className={styles.actionbuttons}>
               {props.mode === 'createTransaction' ? (
                 <button
-                  className={styles.mainButton}
+                  className={sheetStyles.submitButton}
                   type="button"
                   disabled={isAmountEmpty}
                   onClick={handleCreateTransaction}
@@ -252,7 +253,7 @@ export const FormContent = (props: FormContentProps) => {
                 </button>
               ) : props.mode === 'createTemplate' ? (
                 <button
-                  className={styles.mainButton}
+                  className={sheetStyles.submitButton}
                   type="button"
                   disabled={isAmountEmpty}
                   onClick={handleSaveTemplate}
@@ -261,7 +262,7 @@ export const FormContent = (props: FormContentProps) => {
                 </button>
               ) : (
                 <button
-                  className={styles.mainButton}
+                  className={sheetStyles.submitButton}
                   type="button"
                   disabled={isAmountEmpty}
                   onClick={
