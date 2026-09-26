@@ -2,6 +2,7 @@ import type { TransactionType } from "./transaction";
 
 export type Template = {
     id: string;
+    childId: string;
     transactionType: TransactionType;
     icon: string;
     amount: number;
@@ -10,6 +11,6 @@ export type Template = {
     createdAt: string;
   };
 
-  export type CreateTemplate = Omit<Template, "id" | "order" | "createdAt">;
+  export type CreateTemplate = Omit<Template, "id" | "childId" | "order" | "createdAt">;
 
 export type UpdateTemplate = Pick<Template, "transactionType" | "icon" | "amount" | "memo">;

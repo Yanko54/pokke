@@ -1,11 +1,11 @@
-import styles from './PopoverMenu.module.css';
+import styles from './CardActionPopover.module.css';
 
-type PopoverMenuProps = {
+type CardActionPopoverProps = {
   onEdit: () => void;
   onDelete: () => void;
 };
 
-export const PopoverMenu = ({ onEdit, onDelete }: PopoverMenuProps) => {
+export const CardActionPopover = ({ onEdit, onDelete }: CardActionPopoverProps) => {
   return (
     <div className={styles.menu}>
       <button className={styles.menuItem} type="button" onClick={onEdit}>

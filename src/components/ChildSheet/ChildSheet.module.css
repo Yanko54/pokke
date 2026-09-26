@@ -1,0 +1,12 @@
+.content {
+  align-items: center;
+  justify-content: center;
+  gap: 72px;
+}
+
+.content h2 {
+  margin: 0;
+  color: var(--color-denim);
+  font-size: 20px;
+  text-align: center;
+}

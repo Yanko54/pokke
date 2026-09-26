@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { templateIcons } from '../../constants/icons';
-import { PopoverMenu } from '../PopoverMenu/PopoverMenu';
+import { CardActionPopover } from '../CardActionPopover/CardActionPopover';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import kebabIcon from '../../assets/icons/common/kebab.svg';
@@ -74,7 +74,7 @@ export const TemplateCard = ({
       {isMenuOpen && !isReordering && (
         <div onClick={(e) => e.stopPropagation()}>
           <div className={styles.menuBackdrop} onClick={() => setIsMenuOpen(false)} />
-          <PopoverMenu
+          <CardActionPopover
             onEdit={() => {
               setIsMenuOpen(false);
               onEdit(template);
